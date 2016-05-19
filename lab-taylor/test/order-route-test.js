@@ -154,4 +154,31 @@ describe('testing order-route module', function(){
       });
     });
   });
+
+  describe('the /api/order/all endpoint', function(){
+    describe('with a good POST request', function() {
+      before((done) => {
+        request.post(`${serverUrl}/api/order`)
+        .send({item: 'slugs', qty: 1000})
+        .end(() => {
+          request.get(`${serverUrl}/api/order/all`)
+          .end((err, res) => {
+            this.res = res;
+            this.orders = res.body;
+            done();
+          });
+        });
+      });
+
+      it('should have a status of 200',() => {
+        expect(this.res.status).to.equal(200);
+      });
+
+      it('should respond with an array', () => {
+        expect(this.orders).to.be.an('array');
+      });
+
+
+    });
+  });
 });
