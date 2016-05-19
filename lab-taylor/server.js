@@ -11,5 +11,6 @@ orderRoute(router);
 const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function () {
+  this.isRunning = true;
   console.log(`server is running on ${port}`);
 });
