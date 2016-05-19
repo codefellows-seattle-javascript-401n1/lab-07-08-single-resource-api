@@ -27,16 +27,31 @@ describe('testing order-route module', function(){
     }
   });
 
+  describe('testing bad endpoints', function () {
+    before((done) => {
+      request.get(`${serverUrl}/order`)
+      .end((err, res) => {
+        this.res = res;
+        done();
+      });
+    });
+
+    it('should respond with a 404 status code', () => {
+      expect(this.res.status).to.equal(404);
+    });
+
+  });
+
   describe('testing POST method on endpoint /api/order', function(){
     describe('with a good POST request', function() {
       before((done) => {
         request.post(`${serverUrl}/api/order`)
-      .send({item: 'slugs', qty: 1000})
-      .end((err, res) => {
-        this.res = res;
-        this.order = res.body;
-        done();
-      });
+        .send({item: 'slugs', qty: 1000})
+        .end((err, res) => {
+          this.res = res;
+          this.order = res.body;
+          done();
+        });
       });
 
       it('should return a 200', () => {
