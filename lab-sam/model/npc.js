@@ -2,10 +2,9 @@
 
 const uuid = require('node-uuid');
 
-module.exports = function Npc(name, race, class, level){
+module.exports = function Npc(name, race, classes){
   this.id = uuid.v1();
   this.name = name;
   this.race = race;
-  this.class = class;
-  this.level = level;
+  this.classes = classes;
 };

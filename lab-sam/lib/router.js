@@ -27,7 +27,7 @@ Router.prototype.delete = function(endpoint, cb){
 Router.prototype.route = function(){
   const routes = this.routes;
   return function(req, res){
-    Promis.all([
+    Promise.all([
       parseUrl(req),
       parseBody(req)
     ]).then(function(){
@@ -36,15 +36,16 @@ Router.prototype.route = function(){
       }
       fourOhFour(res);
     }).catch(function(err){
+      console.log(err);
       fourOhFour(res);
-    })
+    });
   };
 };
 
 function fourOhFour(res){
   res.writeHead(404, {
-    'Content-Type': 'application/json'
+    'Content-Type': 'text/text'
   });
-  res.write(JSON.stringify('Not Found'));
+  res.write('Not Found');
   res.end();
-};
+}
