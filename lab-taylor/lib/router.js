@@ -2,7 +2,7 @@
 
 const bodyParser = require('./parse-body');
 const urlParser = require('./parse-url');
-const response = require('respnse');
+const response = require('./response');
 
 const Router = module.exports = function() {
   this.routes = {
@@ -33,19 +33,22 @@ Router.prototype.delete = function(endpoint, callback) {
   return this;
 };
 
-Router.prototype.router = function (req, res) {
+Router.prototype.route = function () {
   const routes = this.routes;
-  Promise.all([
-    bodyParser(req),
-    urlParser(req)
-  ]).then(function () {
-    if(typeof routes[req.method][req.url.pathname] === 'function'){
-      return routes[req.method][req.url.pathname](req, res);
-    }
 
-    response(404, 'not found')(res);
-  }).catch(function (err) {
-    console.error('error', err);
-    response(404, 'not found')(res);
-  });
+  return function(req, res){
+    Promise.all([
+      bodyParser(req),
+      urlParser(req)
+    ]).then(function () {
+      if(typeof routes[req.method][req.url.pathname] === 'function'){
+        return routes[req.method][req.url.pathname](req, res);
+      }
+
+      response(404, 'not found')(res);
+    }).catch(function (err) {
+      console.error('error', err);
+      response(404, 'not found')(res);
+    });
+  };
 };
