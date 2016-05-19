@@ -1,6 +1,6 @@
 \'use strict';
 
-const uuid = require(node-uuid);
+const uuid = require('node-uuid');
 
 module.exports = function MatchScore(firstName, LastName, location, score, xCount){
   this.uuid = uuid.v4();
