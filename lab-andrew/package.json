@@ -1,0 +1,19 @@
+{
+  "name": "lab-andrew-router",
+  "version": "0.1.0",
+  "description": "base buil router",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "andrewpeterwatson@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
+  }
+}
