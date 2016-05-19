@@ -2,7 +2,7 @@
 
 const http = require('http');
 //const Router = require(__dirname + 'Router');
-const port = process.argv[2] || 3000;
+const port = process.env.PORT || 3000;
 //const router = new Router();
 
 
