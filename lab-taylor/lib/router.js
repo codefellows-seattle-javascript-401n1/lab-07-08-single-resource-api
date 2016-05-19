@@ -2,6 +2,7 @@
 
 const bodyParser = require('./parse-body');
 const urlParser = require('./parse-url');
+const response = require('respnse');
 
 const Router = module.exports = function() {
   this.routes = {
@@ -42,9 +43,9 @@ Router.prototype.router = function (req, res) {
       return routes[req.method][req.url.pathname](req, res);
     }
 
-    fourOhFour(res);
+    response(404, 'not found')(res);
   }).catch(function (err) {
     console.error('error', err);
-    fourOhFour(res);
+    response(404, 'not found')(res);
   });
 };
