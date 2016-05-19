@@ -1,0 +1,31 @@
+{
+  "name": "http-router",
+  "version": "0.0.1",
+  "description": "basic http router",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muddybeard210/lab-07-08-single-resource-api.git"
+  },
+  "author": "mattsmith203@hotmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muddybeard210/lab-07-08-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/muddybeard210/lab-07-08-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
+    "mocha": "^2.4.5",
+    "node-uuid": "^1.4.7"
+  }
+}
