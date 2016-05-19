@@ -1,7 +1,7 @@
 {
   "name": "lab-07-08-api",
   "version": "0.0.1",
-  "description": "clea",
+  "description": "my single source RESTful api",
   "main": "server.js",
   "directories": {
     "test": "test"
