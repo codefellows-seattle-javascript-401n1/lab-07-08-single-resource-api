@@ -2,11 +2,10 @@
 
 const uuid = require(node-uuid);
 
-function Appointment(){
-  this.uuid: node.uuid(),
-  this.firstName = firstname,
-  this.lastName
-  this.creartedOn
-  this.carModel
-  this.datavaialble
-}
+module.exports = function Appointment(firstName, LastName, carModel){
+  this.uuid = uuid.v4();
+  this.firstName = firstname;
+  this.lastName = lastName;
+  this.creartedOn = new Date();
+  this.carModel = carModel;
+};
