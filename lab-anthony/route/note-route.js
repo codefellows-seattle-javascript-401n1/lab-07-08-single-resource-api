@@ -11,14 +11,24 @@ module.exports = function(router) {
       if (req.body){
         const note = new Note(req.body.content);
         notePool[note.id] = note;
+        console.log(notePool);
         return response(200, note)(res);
       }
       response(400, 'bad request')(res);
     })
     .get('/api/note', function(req, res) {
+      console.log('called GET');
       const note = notePool[req.url.query.id];
       if(note) {
         return response(200, note)(res);
+      }
+      response(404, 'bad request')(res);
+    })
+    .delete('/api/note', function(req, res) {
+      const note = notePool[req.body.id];
+      if (note) {
+        delete notePool[note.id];
+        return response(200, 'Delete successful')(res);
       }
       response(404, 'bad request')(res);
     });
