@@ -50,7 +50,7 @@ describe('testing order-route module', function(){
       });
     });
 
-    describe('a bad POST request', function() {
+    describe('a bad POST request with an invalid body', function() {
       before((done) => {
         request.post(`${serverUrl}/api/order`)
         .send({})
@@ -64,7 +64,22 @@ describe('testing order-route module', function(){
       it('should respond with a 400 status code', () => {
         expect(this.res.status).to.equal(400);
       });
+    });
 
+    describe('a bad POST request with no body', function() {
+      before((done) => {
+        request.post(`${serverUrl}/api/order`)
+        .send()
+        .end((err, res) => {
+          this.res = res;
+          this.order = res.body;
+          done();
+        });
+      });
+
+      it('should respond with a 400 status code', () => {
+        expect(this.res.status).to.equal(400);
+      });
     });
     //add 400 test for bad JSON
   });

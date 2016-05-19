@@ -48,7 +48,7 @@ Router.prototype.route = function () {
       response(404, 'not found')(res);
     }).catch(function (err) {
       console.error('error', err);
-      response(404, 'not found')(res);
+      response(400, 'bad request')(res);
     });
   };
 };
