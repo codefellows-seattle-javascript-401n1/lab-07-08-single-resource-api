@@ -13,22 +13,22 @@ const Router = module.exports = function(){
 //register routes
 Router.prototype.get = function(endpoint, callback){
   this.routes,GET[endpoint] = callback;
-  return.this;
+  return this;
 };
 
 Router.prototype.post = function(endpoint, callback){
   this.routes,POST[endpoint] = callback;
-  return.this;
+  return this;
 };
 
 Router.prototype.put = function(endpoint, callback){
   this.routes,PUT[endpoint] = callback;
-  return.this;
+  return this;
 };
 
 Router.prototype.delete = function(endpoint, callback){
   this.routes,DELETE[endpoint] = callback;
-  return.this;
+  return this;
 };
 
 Router.prototype.route = function(){
