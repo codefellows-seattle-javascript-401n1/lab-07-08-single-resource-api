@@ -44,4 +44,13 @@ module.exports = function(router) {
 
     response(404, 'not found')(res);
   });
+
+  router.get('/api/order/all', function (req, res) {
+
+    const orders = Object.keys(orderPool).map((ordId) => {
+      return orderPool[ordId];
+    });
+
+    response(200, orders)(res);
+  });
 };
