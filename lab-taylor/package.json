@@ -1,0 +1,15 @@
+{
+  "name": "lab-07-08-api",
+  "version": "0.0.1",
+  "description": "clea",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "taylor.wirtz@gmail.com",
+  "license": "MIT"
+}
