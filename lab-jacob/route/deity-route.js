@@ -23,10 +23,13 @@ module.exports = function(router){
     response(404, 'not found')(res);
   })
   .delete('/api/deity', function(req, res){
-    if(req.body){
-      delete valhalla[req.body.id];
-      return response(200, 'deity deleted')(res);
+    console.log('heres delete');
+    if (req.body) {
+      const deity = req.body.id;
+      console.log('inside delete if');
+      delete valhalla[deity];
+      return response(200, deity)(res);
     }
-    response(400, 'bad request')(res);
+    response(404, 'nothing here')(res);
   });
 };

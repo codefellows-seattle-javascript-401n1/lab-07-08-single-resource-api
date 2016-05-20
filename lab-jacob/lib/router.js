@@ -35,10 +35,12 @@ Router.prototype.delete = function(endpoint, callback){
 Router.prototype.route = function(){
   const routes = this.routes;
   return function(req, res){
+    console.log('route function');
     Promise.all([
       bodyParser(req),
       urlParser(req)
     ]).then(function(){
+      console.log('then function');
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         return routes[req.method][req.url.pathname](req, res);
       }
@@ -46,6 +48,7 @@ Router.prototype.route = function(){
       res.write(JSON.stringify('not found'));
       res.end();
     }).catch(function(err){
+      console.log(err, 'catch block');
       res.writeHead(404, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(err));
       res.end();
