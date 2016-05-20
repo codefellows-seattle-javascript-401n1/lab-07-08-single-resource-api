@@ -129,4 +129,24 @@ describe('testing note-route module', function(){
       });
     });
   });
+
+  describe('testing method GET on endpoint /api/note/all', function(){
+    describe('testing successful GET request', function() {
+      before((done)=> {
+        console.log('serverUrl', serverUrl);
+        request.post(`${serverUrl}/api/note`)
+          .send({content: 'This is a test note!'})
+          .end(()=>{
+            request.get(`${serverUrl}/api/note/all`)
+            .end((err, res)=>{
+              this.res = res;
+              done();
+            });
+          });
+      });
+      it('should return status 200', ()=>{
+        expect(this.res.status).to.equal(200);
+      });
+    });
+  });
 });

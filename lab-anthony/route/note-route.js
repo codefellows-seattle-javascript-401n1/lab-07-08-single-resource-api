@@ -26,6 +26,17 @@ module.exports = function(router) {
       }
       response(404, 'not found')(res);
     })
+    .get('/api/note/all', function(req, res){
+      const idArray = [];
+      if(Object.keys(notePool).length === 0) {
+        return response(404, 'not found')(res);
+      }
+      for (var id in notePool) {
+        idArray.push(id);
+      }
+      console.log(Object.keys(notePool).length);
+      response(200, idArray)(res);
+    })
     .delete('/api/note', function(req, res) {
       const note = notePool[req.body.id];
       if (note) {
