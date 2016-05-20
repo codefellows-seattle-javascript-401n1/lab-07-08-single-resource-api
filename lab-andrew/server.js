@@ -1,20 +1,19 @@
 'use strict';
 
 const http = require('http');
-const Router = require('./lib/router');
-
 const port = process.env.PORT || 3000;
+
+const Router = require('./lib/router');
 const router = new Router();
+const reminderRoute = require('./route/reminder-route');
 
 
-router.get('/', function(req, res) {
-  res.writeHead(200);
-  res.write('Router is working');
-  res.end();
-});
+reminderRoute(router);
 
-const server = http.createServer(router.route());
+
+const server = module.exports = http.createServer(router.route);
 
 server.listen(port, function() {
+  server.isRunning = true;
   console.log(`Server is running on PORT: ${port}`);
 });

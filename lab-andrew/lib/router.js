@@ -1,7 +1,7 @@
 'use strict';
 
 const parseUrl = require('url').parse;
-
+const response = require('./response');
 const Router = module.exports = function() {
   this.routes = {
     GET: {},
@@ -36,10 +36,6 @@ Router.prototype.route = function() {
     if(typeof routes[req.method][req.url.pathname] === 'function') {
       return routes[req.method][req.url.pathname](req, res);
     }
-    res.writeHead(404, {
-      'Content-Type': 'application/json'
-    });
-    res.write('Note found');
-    res.end();
+    response(404, 'not found')(res);
   };
 };
