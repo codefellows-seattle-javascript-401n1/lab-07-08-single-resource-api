@@ -1,6 +1,6 @@
 'use strict';
 
-const parseUrl = require('url').parse;
+const parseUrl = require('./parse-url');
 
 const Router = module.exports = function(){
   //object that stores routes
@@ -35,13 +35,13 @@ Router.prototype.delete = function(endpoint, callback){
 Router.prototype.route = function(){
   const routes = this.routes;//I do not understand why we need this
   return function(req, res){
-    req.url = parseUrl(req.url);
-    console.log('valid function: ' , routes[req.method][req.url]);
-    if(typeof routes[req.method][req.url.pathname] === 'function'){
-      return routes[req.method][req.url.pathname](req, res);
-    }
-    res.writeHead(404, {'Content-Type': 'application/json'});
-    res.write('not found');
-    res.end();
+    parseUrl(req).then(function(){
+      if(typeof routes[req.method][req.url.pathname] === 'function'){
+        return routes[req.method][req.url.pathname](req, res);
+      }
+      res.writeHead(404, {'Content-Type': 'application/json'});
+      res.write(JSON.stringify('not found'));
+      res.end();
+    });
   };
 };
