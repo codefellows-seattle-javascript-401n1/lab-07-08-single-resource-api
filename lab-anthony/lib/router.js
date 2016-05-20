@@ -44,6 +44,7 @@ Router.prototype.route = function() {
       }
       fourZeroFour(res);
     }).catch(function(err) {
+      console.error('error ', err);
       fourZeroFour(res);
     });
   };
