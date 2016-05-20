@@ -10,6 +10,7 @@ module.exports = function(router){
     if(req.body.name && req.body.classes){
       const npc = new Npc(req.body.name, req.body.race, req.body.classes);
       npcPool[npc.id] = npc;
+      console.log(npc);
       return response(200, npc)(res);
     }
     response(400, 'bad request')(res);
