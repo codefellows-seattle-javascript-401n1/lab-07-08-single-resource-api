@@ -46,6 +46,6 @@ function fourOhFour(res){
   res.writeHead(404, {
     'Content-Type': 'text/text'
   });
-  res.write('Not Found');
+  res.write({body: 'Not Found'});
   res.end();
 }

@@ -7,26 +7,28 @@ var npcPool = {};
 
 module.exports = function(router){
   router.post('/api/npc', function(req, res){
-    if(req.body.name && req.body.classes){
+    if (req.body.name && req.body.classes) {
       const npc = new Npc(req.body.name, req.body.race, req.body.classes);
       npcPool[npc.id] = npc;
       console.log(npc);
       return response(200, npc)(res);
     }
-    response(400, 'bad request')(res);
+    response(400, {body: 'bad request'})(res);
   })
   .get('/api/npc', function(req, res){
+    console.log('get hit');
     const npc = npcPool[req.url.query.id];
-    if(npc){
+    if (npc) {
       return response(200, npc)(res);
     }
+    if ()
     response(404, 'not found')(res);
   })
   .delete('/api/npc', function(req, res){
-    if(npc){
-      delete npcPool[req.url.query.id];
-      return response(200, npc)(res);
+    if (npcPool[req.body.id]) {
+      delete npcPool[req.body.id];
+      return response(200, 'Deleted')(res);
     }
-    response(404, 'not found')(res);
+    response(404, {body: 'not found'})(res);
   });
 };
