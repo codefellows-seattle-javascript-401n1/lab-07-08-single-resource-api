@@ -3,7 +3,7 @@
 const urlParser = require('./url-parser');   // module for parsing the url
 const bodyParser = require('./body-parser'); // module for parsing the request body
 
-const Router = module.exports = function(){
+const Router = module.exports = function(){ //registers methods for a specific route
   this.routes = {
     GET: {},
     PUT: {},
@@ -39,7 +39,7 @@ Router.prototype.route = function(){
       bodyParser(req),
       urlParser(req)
     ]).then(function(){
-      if(typeof routes[req.method][req.url.pathname] === 'function'){
+      if(typeof routes[req.method][req.url.pathname] === 'function'){ 
         return routes[req.method][req.url.pathname](req, res);
       }
       res.writeHead(404, {'Content-Type': 'application/json'});
@@ -47,7 +47,7 @@ Router.prototype.route = function(){
       res.end();
     }).catch(function(err){
       res.writeHead(404, {'Content-Type': 'application/json'});
-      res.write(JSON.stringify('not found'));
+      res.write(JSON.stringify(err));
       res.end();
     });
   };

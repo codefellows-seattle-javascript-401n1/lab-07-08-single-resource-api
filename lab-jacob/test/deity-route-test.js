@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 const serverUrl = `localhost:${PORT}`;
 
 describe('testing the deity-note route', function(){
-  before(function(done){ // runs this block before every it block
+  before(function(done){ // runs this block before every it block, starts server
     if(!server.isRunning){
       server.listen(PORT, function(){
         done();
@@ -18,7 +18,7 @@ describe('testing the deity-note route', function(){
     done();
   });
 
-  after(function(done){ // runs this block once after it block runs
+  after(function(done){ // runs this block once after it block runs, stops server
     if(server.isRunning){
       server.close(function() {
         server.isRunning = false;

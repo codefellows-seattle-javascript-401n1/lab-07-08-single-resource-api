@@ -1,11 +1,12 @@
 'use strict';
 
 const http = require('http');
+const PORT = process.env.PORT || 3000;
 
 const deityRoute = require('./route/deity-route');
 const Router = require('./lib/router');
 const router = new Router();
-const PORT = process.env.PORT || 3000;
+
 
 deityRoute(router);
 
