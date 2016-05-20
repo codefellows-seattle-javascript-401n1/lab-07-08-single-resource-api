@@ -2,7 +2,7 @@
 ======
 
 [![](https://img.shields.io/badge/Issues%3F-Ask%20for%20Help!-55cbe0.svg)](https://github.com/codefellows/seattle-javascript-401n1/issues/new)
-[![Build Status](https://travis-ci.org/codefellows-seattle-javascript-401n1/lab-07-single-resource-api.svg?branch=master)](https://travis-ci.org/codefellows-seattle-javascript-401n1/lab-07-single-resource-api)
+[![Build Status](https://travis-ci.org/codefellows-seattle-javascript-401n1/lab-07-08-single-resource-api.svg?branch=master)](https://travis-ci.org/codefellows-seattle-javascript-401n1/lab-07-08-single-resource-api)
 
 # To Submit this Assignment
   * fork this repository
