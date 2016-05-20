@@ -24,4 +24,4 @@ gulp.task('nodemon', function () {
   });
 });
 
-gulp.task('default', ['lint', 'test', 'nodemon']);
+gulp.task('default', ['lint', 'test']);
