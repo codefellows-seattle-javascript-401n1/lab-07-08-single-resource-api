@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const del = require('del');
 
 const Storage = module.exports = function(dataDir){
   this.dataDir = dataDir;
@@ -27,6 +28,18 @@ Storage.prototype.fetchOrder = function (schema, id) {
       } catch (err) {
         reject(err);
       }
+    });
+  });
+};
+
+Storage.prototype.removeOrder = function (schema, id) {
+  return new Promise((resovle, reject) => {
+    const path = `${this.dataDir}/${schema}/${id}`;
+    del(path).then((path) => {
+      resovle(path);
+    })
+    .catch((path) => {
+      reject(path);
     });
   });
 };

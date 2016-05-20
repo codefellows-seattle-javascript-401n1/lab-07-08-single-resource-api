@@ -30,31 +30,36 @@ module.exports = function(router) {
     .then(function (order) {
       return response(200, order)(res);
     }).catch(function () {
-      response(404, 'not found')(res);
+      return response(404, 'not found')(res);
     });
   })
   .put('/api/order', function(req, res){
-    const order = orderPool[req.body.id];
-    if (order) {
+    console.log('putting', req.body);
+    storage.fetchOrder('order', req.body.id)
+    .then(function (order) {
       order.qty = req.body.qty || order.qty;
       order.item = req.body.item || order.item;
-      orderPool[order.id] = order;
-      return response(200, order)(res);
-    }
-    response(404, 'not found')(res);
+      storage.setOrder('order', order)
+      .then(function (order) {
+        return response(200, order)(res);
+      });
+    }).catch(function () {
+      return response(404, 'not found')(res);
+
+    });
   })
   .delete('/api/order', function(req, res){
-    const order = orderPool[req.body.id];
-    if (order) {
-      delete orderPool[order.id];
-      return response(200, 'deleted')(res);
-    }
-
-    response(404, 'not found')(res);
+    storage.removeOrder('order', req.body.id)
+    .then(function () {
+      response(200, 'deleted')(res);
+    })
+    .catch(function () {
+      response(404, 'not found')(res);
+    });
   });
 
   router.get('/api/order/all', function (req, res) {
-
+    
     const orders = Object.keys(orderPool).map((ordId) => {
       return orderPool[ordId];
     });
