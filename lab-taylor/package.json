@@ -21,6 +21,8 @@
     "superagent": "^2.0.0-alpha.3"
   },
   "dependencies": {
+    "del": "^2.2.0",
+    "mkdirp": "^0.5.1",
     "uuid": "^2.0.2"
   }
 }
