@@ -47,6 +47,10 @@ describe('testing storage module', function () {
         fs.readdir(`${__dirname}/data/order`, function(err, files){
           expect(files.indexOf(123456)).to.equal(-1);
           done();
+        }).catch(function (err) {
+          console.log(err);
+          expect(err).to.equal(undefined);
+          done();
         });
       });
     });
