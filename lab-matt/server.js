@@ -1,11 +1,17 @@
-'use strict'
+'use strict';
 
 const http = require('http');
+const port = process.env.PORT || 3000;
 
-const port = process.end.PORT || 3000;
+const Router = require('./lib/router');
+const router = new Router();
+const modelRoute = require('./route/model-route');
 
-const server = http.createServer(router.route());
+modelRoute(router);
+
+const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function(){
-  console.log('server up :::', port);
+  server.isRunning = true;
+  console.log('Server is running on port: ', port);
 });

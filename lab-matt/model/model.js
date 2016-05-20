@@ -2,7 +2,7 @@
 
 const uuid = require('node-uuid');
 
-module.exports = function Note(name){
+module.exports = function Model(name){
   this.id = uuid.v1();
   this.name = name;
   this.luckNumber = Math.floor(Math.random() * 10);
