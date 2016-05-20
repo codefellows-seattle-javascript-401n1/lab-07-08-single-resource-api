@@ -39,7 +39,7 @@ Router.prototype.route = function(){
       bodyParser(req),
       urlParser(req)
     ]).then(function(){
-      if(typeof routes[req.method][req.url.pathname] === 'function'){ 
+      if(typeof routes[req.method][req.url.pathname] === 'function'){
         return routes[req.method][req.url.pathname](req, res);
       }
       res.writeHead(404, {'Content-Type': 'application/json'});
