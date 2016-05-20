@@ -59,11 +59,11 @@ module.exports = function(router) {
   });
 
   router.get('/api/order/all', function (req, res) {
-    
-    const orders = Object.keys(orderPool).map((ordId) => {
-      return orderPool[ordId];
+    storage.listOrders('order').then(function (files) {
+      files = files.filter((file) => {
+        return file !== '.gitignore';
+      });
+      response(200, files)(res);
     });
-
-    response(200, orders)(res);
   });
 };

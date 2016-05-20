@@ -43,3 +43,13 @@ Storage.prototype.removeOrder = function (schema, id) {
     });
   });
 };
+
+Storage.prototype.listOrders = function(schema) {
+  return new Promise((resolve, reject) => {
+    const path = `${this.dataDir}/${schema}`;
+    fs.readdir(path, function (err, files) {
+      if (err) return reject(err);
+      return resolve(files);
+    });
+  });
+};
