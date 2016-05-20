@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const del = require('del');
+const mkdirp = require('mkdirp');
 
 const Storage = module.exports = function(dataDir){
   this.dataDir = dataDir;
@@ -9,13 +10,23 @@ const Storage = module.exports = function(dataDir){
 
 Storage.prototype.setOrder = function (schema, order) {
   return new Promise((resolve, reject) => {
+    //const storage = this;
     const path = `${this.dataDir}/${schema}/${order.id}`;
-    fs.writeFile(path, JSON.stringify(order), function (err) {
-      if (err) return reject(err);
-      resolve(order);
+    fs.stat(`${this.dataDir}/${schema}`, (err, stats) => {
+      if (err || !stats.isFile()){
+        mkdirp(`${this.dataDir}/${schema}`, function(err){
+          if (err) return reject(err);
+        });
+      }
+
+      fs.writeFile(path, JSON.stringify(order), function (err) {
+        if (err) return reject(err);
+        resolve(order);
+      });
     });
   });
 };
+
 
 Storage.prototype.fetchOrder = function (schema, id) {
   return new Promise((resolve, reject) =>  {

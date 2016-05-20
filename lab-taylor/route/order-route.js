@@ -6,8 +6,6 @@ const response = require('../lib/response');
 const Storage = require('../lib/storage');
 const storage = new Storage(`${__dirname}/../data`);
 
-const orderPool = {};
-
 module.exports = function(router) {
   router.post('/api/order', function (req,res) {
     const order = new Order(req.body.item, req.body.qty);
