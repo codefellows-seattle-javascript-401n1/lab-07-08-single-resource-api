@@ -9,9 +9,9 @@ function makeDirIfNeeded(path, callback) {
     if (err || !stats.isFile()) {
       mkdirp(path, function(err){
         if (err) return callback(err);
+        return callback();
       });
     }
-    callback(null);
   });
 }
 
