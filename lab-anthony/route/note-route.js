@@ -34,7 +34,6 @@ module.exports = function(router) {
       for (var id in notePool) {
         idArray.push(id);
       }
-      console.log(Object.keys(notePool).length);
       response(200, idArray)(res);
     })
     .delete('/api/note', function(req, res) {
