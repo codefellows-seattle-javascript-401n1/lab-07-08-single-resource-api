@@ -1,7 +1,8 @@
 'use strict';
 
-const parseUrl = require('url').parse;
-const response = require('./response');
+const parseUrl = require('./parse-url');
+const parseBody = require('./parse-body');
+// const response = require('./response');
 const Router = module.exports = function() {
   this.routes = {
     GET: {},
@@ -11,10 +12,6 @@ const Router = module.exports = function() {
   };
 };
 
-Router.prototype.get = function(endpoint, cb) {
-  this.routes.GET[endpoint] = cb;
-  return this;
-};
 Router.prototype.get = function(endpoint, cb) {
   this.routes.GET[endpoint] = cb;
   return this;
@@ -32,10 +29,26 @@ Router.prototype.get = function(endpoint, cb) {
 Router.prototype.route = function() {
   const routes = this.routes;
   return function(req, res) {
-    req.url = parseUrl(req.url);
-    if(typeof routes[req.method][req.url.pathname] === 'function') {
-      return routes[req.method][req.url.pathname](req, res);
-    }
-    response(404, 'not found')(res);
+
+
+    Promise.all([
+      parseBody(req),
+      parseUrl(req)
+    ]).then(function(){
+      if(typeof routes[req.method][req.url.pathname] === 'function'){
+        return routes[req.method][req.url.pathname](req, res);
+      }
+      fourOhFour(res);
+    }).catch(function() {
+      fourOhFour(res);
+    });
   };
 };
+
+function fourOhFour(res){
+  res.writeHead(404, {
+    'Content-Type': 'application/json'
+  });
+  res.write(JSON.stringify('not found'));
+  res.end();
+}

@@ -11,7 +11,7 @@ const reminderRoute = require('./route/reminder-route');
 reminderRoute(router);
 
 
-const server = module.exports = http.createServer(router.route);
+const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function() {
   server.isRunning = true;
