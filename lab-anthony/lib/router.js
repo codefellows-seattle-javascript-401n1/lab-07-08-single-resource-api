@@ -2,6 +2,7 @@
 
 const parseUrl = require('./parse-url');
 const parseBody = require('./parse-body');
+const response = require('./response');
 
 const Router = module.exports = function(){
   this.routes = {
@@ -42,19 +43,19 @@ Router.prototype.route = function() {
       if(typeof routes[req.method][req.url.pathname] === 'function') {
         return routes[req.method][req.url.pathname](req, res);
       }
-      fourZeroFour(res);
+      response(404, 'not found')(res);
     }).catch(function(err) {
       console.error('error ', err);
-      fourZeroFour(res);
+      response(400, 'bad request')(res);
     });
   };
 };
 
-function fourZeroFour(res) {
-  res.writeHead(404, {
-    'Content-Type': 'application/json'
-  });
-
-  res.write(JSON.stringify('not found'));
-  res.end();
-}
+// function fourZeroFour(res) {
+//   res.writeHead(404, {
+//     'Content-Type': 'application/json'
+//   });
+//
+//   res.write(JSON.stringify('not found'));
+//   res.end();
+// }
