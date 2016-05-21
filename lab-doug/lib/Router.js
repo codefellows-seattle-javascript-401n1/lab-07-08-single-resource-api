@@ -41,10 +41,14 @@ Router.prototype.route = function(){
       parseUrl(req)
     ]).then(function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
+        console.log('entered then of router.route');
+        console.log('method: ', req.method);
+        console.log('pathname: ', req.url.pathname);
+        console.log('route:', routes[req.method][req.url.pathname]);
         return routes[req.method][req.url.pathname](req, res);
       }
-      fourOhFour(res);
     }).catch(function(err){
+      console.log('catch called with error: ', err);
       fourOhFour(res);
     });
   };
@@ -52,6 +56,6 @@ Router.prototype.route = function(){
 
 function fourOhFour(res){
   res.writeHead(404, {'Content-Type': 'application-json'});
-  res.write(JSON.stringify('not found'));
+  res.write(JSON.stringify('not found in router.route router.js'));
   res.end();
 }

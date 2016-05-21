@@ -1,12 +1,10 @@
-\'use strict';
+'use strict';
 
 const uuid = require('node-uuid');
 
-module.exports = function MatchScore(firstName, LastName, location, score, xCount){
+module.exports = function MatchScore(distance, score, xCount){
   this.uuid = uuid.v4();
-  this.firstName = firstname;
-  this.lastName = lastName;
-  this.location = location;
+  this.distance = distance;
   this.score = score;
-  this xCount = xCount;
+  this.xCount = xCount;
 };

@@ -1,12 +1,13 @@
 'use strict';
-
-const url = require('url');
-const queryString = require('querystring');
+const parseUrl = require('url').parse;
+const parseQuery = require('querystring').parse;
 
 module.exports = function(req){
   return new Promise(function(resolve, reject){
-    req.url = url.parse(req.url);
-    url.query = queryString.parse(url.query);
+    req.url = parseUrl(req.url);
+    console.log('req.url: ', req.url);
+    req.url.query = parseQuery(req.url.query);
+    console.log('req.url.query: ', req.url.query);
     resolve();
   });
 };
