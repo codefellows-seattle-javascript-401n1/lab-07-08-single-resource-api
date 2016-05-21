@@ -34,42 +34,65 @@ describe('testing people-route module', function(){
     console.log('Server is Being Closed - After');
     done();
   });
-  //
-  it('should do nothing' , (done) => {
-    expect("null").to.equal("null");
-    done();
+
+  describe('testing method POST on endpoint /api/people', function(){
+    before((done) => {
+
+      request.post(`${serverUrl}/api/people`)
+        .send({name: 'testname!'})
+        .end((err, res) => {
+          this.res = res;
+          this.person = res.body;
+          done();
+        });
+    });
+
+    it('should return status 200', () => {
+      expect(this.res.status).to.equal(200);
+    });
+
+    it('should return a person', () => {
+      expect(this.person.name).to.equal('testname!');
+    });
   });
 
-  // describe('testing method POST on endpoint /api/people', function(){
-  //   before((done) => {
-  //     console.log('serverUrl', serverUrl);
-  //     request.post(`${serverUrl}/api/people`)
-  //       .send({name: 'testname!'})
-  //       .end((err, res) => {
-  //         this.res = res;
-  //         this.person = res.body;
-  //         done();
-  //       });
-  //   });
-  //
-  //   it('should return status 200', () => {
-  //     expect(this.res.status).to.equal(200);
-  //   });
-  //
-  //   it('should return a person', () => {
-  //     expect(this.person.name).to.equal('testname!');
-  //   });
-  // });
   it('should return status 400', function(done) {
-    request.post(serverUrl + '/api/people')
-      // .send({bad:'object'})
+    var url = `${serverUrl}/api/people`;
+    request.post(url)
+      .send({bad:'object'})
       .end(function(err, res) {
-        console.log('inside the .end for POST fail test');
         expect(res.status).to.equal(400);
         done();
       });
   });
-  // describe('for method POST on endpoint /api/people', () => {
-  //
-  // });
-}); //THIS IS THE END
+
+  describe('testing method GET on endpoint /api/people', function(){
+    it('should return status 200', () => {
+      request
+        .get(serverUrl + '/api/people')
+        .query('name=testname!')
+        .end(function(err, res){
+          expect(res.status).to.equal(200);
+        });
+    });
+
+    it('should return status 404', () => {
+      request
+        .get(serverUrl + '/api/people')
+        .query('name=doesNotExist')
+        .end(function(err, res){
+          expect(res.status).to.equal(404);
+        });
+    });
+
+    it('should return status 400', function(){
+      request
+        .get(serverUrl + '/api/people')
+        .query('name=')
+        .end(function(err, res){
+          expect(res.status).to.equal(400);
+        });
+    });
+  });
+
+}); // END OF PEOPLE-ROUTE-TEST MODULE

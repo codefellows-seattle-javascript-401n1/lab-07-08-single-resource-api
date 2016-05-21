@@ -11,10 +11,9 @@ module.exports = function(router){
     if (req.body.name){
       const person = new People(req.body.name);
       peepPool[person.id] = person;
-      // console.log(peepPool);
       return response(200, person)(res);
     }
-    response(400, 'bad request!');
+    response(400, 'bad request!')(res);
   })
   .get('/api/people', function(req, res){
     const person = peepPool[req.query.id];
@@ -22,7 +21,11 @@ module.exports = function(router){
       return response(200, person)(res);
     }
     response(404, 'not found')(res);
-
+  }).get('/api/people/all', function(req, res){
+    if (peepPool){
+      return response(200, peepPool)(res);
+    }
+    return response(400, 'hmm, nobody here')(res);
   }).delete('/api/people', function(req, res){
     if (req.body){
       const person = peepPool[req.body.id];
@@ -33,4 +36,5 @@ module.exports = function(router){
       return response(404, 'not found')(res);
     }
   });
-};
+
+}; // end of module.exports router
