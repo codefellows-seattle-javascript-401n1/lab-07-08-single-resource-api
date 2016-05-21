@@ -20,7 +20,7 @@ module.exports = function(router){
     }
   }).put('/api/matchscore', function(req, res){
     if(matchScorePool[req.url.query.uuid]){
-      var uuid = matchScorePool[req.url.query.uuid];
+      let uuid = matchScorePool[req.url.query.uuid];
       uuid.distance = req.body.distance;
       uuid.score= req.body.score;
       uuid.xCount= req.body.xCount;
@@ -29,10 +29,12 @@ module.exports = function(router){
       res.end();
     }
   }).delete('/api/matchscore', function(req, res){
-    if(matchScorePool[req.url.query.uuid]){
-      delete matchScorePool[req.url.query.uuid];
+    if(matchScorePool[req.body.uuid]){
+      console.log('delete statement is true');
+      delete matchScorePool[req.body.uuid];
       res.writeHead(200, {'Content-Type': 'application/json'});
-      res.write('file deleted: ', JSON.stringify(matchScorePool[req.url.query.uuid]));
+      res.write('file deleted: ');
+      console.log(matchScorePool);
       res.end();
     }
   });
