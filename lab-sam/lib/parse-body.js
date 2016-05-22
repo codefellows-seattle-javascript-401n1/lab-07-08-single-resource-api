@@ -12,6 +12,7 @@ module.exports = function(req){
           req.body = JSON.parse(req.body);
           resolve();
         } catch(err){
+          console.log('PARSE BODY ERROR', err);
           reject(err);
         }
       });

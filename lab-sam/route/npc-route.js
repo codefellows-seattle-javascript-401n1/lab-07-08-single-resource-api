@@ -13,7 +13,7 @@ module.exports = function(router){
       console.log(npc);
       return response(200, npc)(res);
     }
-    response(400, {body: 'bad request'})(res);
+    response(400, 'bad request')(res);
   })
   .get('/api/npc', function(req, res){
     console.log('get hit');
@@ -21,7 +21,9 @@ module.exports = function(router){
     if (npc) {
       return response(200, npc)(res);
     }
-    if ()
+    if (!req.url.query.id) {
+      return response(400, 'bad request')(res);
+    }
     response(404, 'not found')(res);
   })
   .delete('/api/npc', function(req, res){
@@ -29,6 +31,6 @@ module.exports = function(router){
       delete npcPool[req.body.id];
       return response(200, 'Deleted')(res);
     }
-    response(404, {body: 'not found'})(res);
+    response(404, 'not found')(res);
   });
 };

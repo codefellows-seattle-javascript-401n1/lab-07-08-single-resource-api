@@ -34,18 +34,19 @@ Router.prototype.route = function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         return routes[req.method][req.url.pathname](req, res);
       }
-      fourOhFour(res);
+      fourHunderd(res);
     }).catch(function(err){
-      console.log(err);
-      fourOhFour(res);
+      console.log('route method', err);
+      fourHunderd(res);
     });
   };
 };
 
-function fourOhFour(res){
-  res.writeHead(404, {
-    'Content-Type': 'text/text'
+function fourHunderd(res){
+  console.log('called 404');
+  res.writeHead(400, {
+    'Content-Type': 'application/json'
   });
-  res.write({body: 'Not Found'});
+  res.write(JSON.stringify('Bad request'));
   res.end();
 }

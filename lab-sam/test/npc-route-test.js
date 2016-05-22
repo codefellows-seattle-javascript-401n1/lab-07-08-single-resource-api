@@ -50,27 +50,18 @@ describe('testing npc-route module', function(){
       expect(this.npc.name).to.equal('testy Mctestface');
     });
   });
-  // describe('testing the POST errors method on endpoint api/npc', function(){
-  //   before((done)=>{
-  //     console.log('serverUrl', serverUrl);
-  //     request.post(`${serverUrl}/api/npc`)
-  //       .send(name: 'testy Mctestface',
-  //       race: 'testor',
-  //       classes: 'test1, test2'
-  //     ).end((err, res) =>{
-  //       this.res = res;
-  //       this.npc = res.body;
-  //       done();
-  //     });
-  //   });
-  //
-  //   it('should return status 400', ()=>{
-  //     expect(this.res.status).to.equal(200);
-  //   });
-  //
-  //   it('should return a npc', ()=>{
-  //     expect(this.err).to.equal('bad request');
-  //   });
+  describe('testing the POST errors method on endpoint api/npc', function(){
+    it('should return status 400', (done)=>{
+      request.post(`${serverUrl}/api/npc`)
+      .send('hello test')
+      .end(function(err, res){
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('Bad request');
+          done();
+        });
+      });
+    });
+
   describe('testing the GET method on endpoint api/npc', function(){
     before((done)=>{
       console.log('serverUrl', serverUrl);
@@ -99,7 +90,7 @@ describe('testing npc-route module', function(){
         done();
       });
     });
-    it('should return status 404', (done)=>{
+    it('should return status 400', (done)=>{
       request.get(`${serverUrl}/api/npc?`).end(function(err, res){
         expect(res.status).to.equal(400);
         expect(res.body).to.equal('bad request');
@@ -122,7 +113,6 @@ describe('testing npc-route module', function(){
       });
     });
     it('should return status 200', (done)=>{
-      console.log('this ID : ' + this.id);
       request.delete(`${serverUrl}/api/npc`)
       .send({id: `${this.id}`})
       .end((err, res)=>{
