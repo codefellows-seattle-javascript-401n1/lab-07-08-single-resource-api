@@ -42,10 +42,4 @@ module.exports = function(router) {
   }
   response(404, 'not found')(res);
 });
-  router.get('/api/reminder/all', function(req, res) {
-    const reminder = Object.keys(reminderPool).map((id) => {
-      return reminderPool[id];
-    });
-    response(200, reminder)(res);
-  });
 };
