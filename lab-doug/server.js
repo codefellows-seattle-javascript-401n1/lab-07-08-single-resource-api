@@ -12,8 +12,9 @@ matchScoreRoute(router);
 console.log('routes are registered in router object: ', router);
 console.log('POST route:\n ', router.routes.POST['/api/matchscore']);
 /*the createServer is looking for a function that takes req and res as its arguments.  the router.route() returns a function that takes req and res as its arguments*/
-const server = http.createServer(router.route());
+const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function(){
+  server.isRunning = true;
   console.log('http server started on port: ', port);
 });
