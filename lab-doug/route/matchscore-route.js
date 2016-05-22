@@ -5,7 +5,7 @@ const response = require('../lib/response');
 var matchScorePool = {};
 
 module.exports = function(router){
-  console.log('entered matchscore-route.route');
+  // console.log('entered matchscore-route.route');
   router.post('/api/matchscore', function(req, res){
     if(req.body){
       const matchScore = new MatchScore(req.body.distance, req.body.score, req.body.xcount);
@@ -42,7 +42,7 @@ module.exports = function(router){
   }).delete('/api/matchscore', function(req, res){
     if(matchScorePool[req.body.uuid]){
       const uuid = matchScorePool[req.body.uuid];
-      console.log('delete statement is true');
+      // console.log('delete statement is true');
       delete matchScorePool[req.body.uuid];
       return response(404, uuid)(res);
       // res.writeHead(200, {'Content-Type': 'application/json'});

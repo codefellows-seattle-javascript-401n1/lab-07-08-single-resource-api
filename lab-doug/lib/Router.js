@@ -2,6 +2,7 @@
 
 const parseUrl = require('./parse-url');
 const parseBody = require('./parse-body');
+const response = require('./response');
 
 const Router = module.exports = function(){
   //object that stores routes
@@ -41,21 +42,15 @@ Router.prototype.route = function(){
       parseUrl(req)
     ]).then(function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
-        console.log('entered then of router.route');
-        console.log('method: ', req.method);
-        console.log('pathname: ', req.url.pathname);
-        console.log('route:', routes[req.method][req.url.pathname]);
+        // console.log('entered then of router.route');
+        // console.log('method: ', req.method);
+        // console.log('pathname: ', req.url.pathname);
+        // console.log('route:', routes[req.method][req.url.pathname]);
         return routes[req.method][req.url.pathname](req, res);
       }
     }).catch(function(err){
       console.log('catch called with error: ', err);
-      fourOhFour(res);
+      return response(404, 'not found')(res);
     });
   };
 };
-
-function fourOhFour(res){
-  res.writeHead(404, {'Content-Type': 'application-json'});
-  res.write(JSON.stringify('not found in router.route router.js'));
-  res.end();
-}
