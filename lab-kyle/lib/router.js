@@ -34,20 +34,16 @@ Router.prototype.delete = function(endpoint, callback){
 Router.prototype.route = function(){
   const routes = this.routes;
   return function(req, res){
-    console.log('got it');
     Promise.all([
       parseBody(req),
-      console.log('got it 3'),
-      parseUrl(req),//getting stuck right here
-      console.log('got it 4')
+      parseUrl(req)//getting stuck right here
     ]).then(function(){
-      console.log('got it 2');
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         return routes[req.method][req.url.pathname](req, res);
       }
       fourOhFour(res);
     }).catch(function(err){
-      console.log('got it 5');
+      console.err(err);
       fourOhFour(res);
     });
   };
