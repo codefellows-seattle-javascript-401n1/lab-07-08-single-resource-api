@@ -2,6 +2,9 @@
 
 const Reminder = require('../model/reminder');
 const response = require('../lib/response');
+const Storage = require('../lib/storage');
+const newStorage = new Storage(`${__dirname}/../data/`);
+const del = require('del');
 
 const reminderPool = {};
 
@@ -12,6 +15,7 @@ module.exports = function(router) {
       reminder.content = req.body.content || req.content;
       reminder.remindMe = req.body.remindMe || req.remindMe;
       reminderPool[reminder.body] = reminder;
+      newStorage.setItem('notes', reminder);
       return response(200, reminder)(res);
     }
     response(400, 'bad request')(res);
@@ -34,10 +38,10 @@ module.exports = function(router) {
     response(404, 'not found')(res);
   })
 .delete('/api/reminder', function(req, res) {
-  console.log('delete');
-  if (req.body) {
-    console.log(req.url.query.id);
-    delete reminderPool[req.body.id];
+  if (`${__dirname}/../data/notes/${req.body.id}`) {
+    del(`${__dirname}/../data/notes/${req.body.id}`).then(() => {
+      console.log(`DELETED: ${__dirname}/../data/notes?id=${req.body.id}` );
+    });
     return response(200, 'deleted')(res);
   }
   response(404, 'not found')(res);

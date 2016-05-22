@@ -28,6 +28,8 @@ describe('Testing reminder route module', function() {
     }
     done();
   });
+
+
   describe('testing POST method on endpoint /api/reminder', function() {
     before((done) => {
       console.log('serverUrl', serverUrl);
@@ -46,34 +48,67 @@ describe('Testing reminder route module', function() {
       expect(this.reminder.content).to.equal('Troll talk');
     });
   });
-  // describe('testing POST fail on endpoint /api/reminder', function() {
-  //   before((done) => {
-  //     console.log('serverUrl', serverUrl);
-  //     request.post(`${serverUrl}/api/reminder`)
-  //     .send({content: null})
-  //     .end((err, res) => {
-  //       this.res = res;
-  //       this.reminder = res.body;
-  //       done();
-  //     });
-  //   });
-  //   it('should return a status 400', () => {
-  //     console.log('STATUS: ', this.res.status);
-  //     expect(this.res.status).to.equal(400);
-  //   });
-  // });
-});
 
-describe('testing GET res for not found ID on endpoint /api/reminder', function() {
-  before((done) => {
-    console.log('serverUrl', serverUrl);
-    request.get(`${serverUrl}/api/reminder`)
-    .end((err, res) => {
-      this.res = res;
-      done();
+
+  describe('testing invalid POST fail on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`)
+      .send({remindMe: null})
+      .end((err, res) => {
+        this.res = res;
+        this.reminder = res.body.content;
+        done();
+      });
     });
-    it('should return a status 404 not found', () => {
-      expect(this.res.status).to.equal(404);
+    it('should return a status 400', () => {
+      expect(this.res.status).to.equal(400);
     });
   });
+
+
+
+  describe('testing GET id method on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`)
+      .send({content: 'trolls'})
+      .end((err, res) => {
+        this.res = res;
+        this.reminder.id = res.body.id;
+        done();
+      });
+    });
+    it('should return a status 200', (done) => {
+      console.log('ID: ', this.reminder.id);
+      request.get(`${serverUrl}/api/reminder/?id=${this.reminder.id}`)
+      .end((err, res) => {
+        this.res = res;
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+  });
+
+
+
+  describe('testing GET res for not found ID on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`)
+      .send({id: null})
+      .end((err, res) => {
+        this.res = res;
+        this.reminder.id = res.body.id;
+        done();
+      });
+    });
+  });
+  it('should return a status 404 not found', (done) => {
+    request.get(`${serverUrl}/api/reminder`)
+      .end((err, res) => {
+        this.res = res;
+        expect(this.res.status).to.equal(404);
+        done();
+      });
+  });
+
+
 });

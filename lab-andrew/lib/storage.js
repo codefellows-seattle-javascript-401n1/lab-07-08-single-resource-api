@@ -5,10 +5,10 @@ const fs = require('fs');
 const Storage = module.exports = function(dataDir){
   this.dataDir = dataDir;
 };
-
 Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) => {
     fs.writeFile(`${this.dataDir}/${schema}/${item.id}`, JSON.stringify(item), function(err) {
+      console.log('created: ', item);
       if (err) return reject(err);
       resolve(item);
     });
