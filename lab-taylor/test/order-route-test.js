@@ -96,7 +96,6 @@ describe('testing order-route module', function(){
         expect(this.res.status).to.equal(400);
       });
     });
-    //add 400 test for bad JSON
   });
 
   describe('testing GET method on endpoint /api/order', function(){
@@ -178,7 +177,9 @@ describe('testing order-route module', function(){
         expect(this.orders).to.be.an('array');
       });
 
-
+      it('should have a length greater than 0', () => {
+        expect(this.orders).to.have.length.above(0);
+      });
     });
   });
 });
