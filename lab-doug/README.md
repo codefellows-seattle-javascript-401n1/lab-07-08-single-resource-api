@@ -8,7 +8,8 @@
 *getting the httpie commands right  
 *reaquainted myself with packet sniffers after a 10 year break.  By using   wireshark packet sniffer I could quickly tell if my http requests sent by httpie   were correctly formatted.  
 *learned the basics of Postman plug-in for chrome  
-*I learned the purpose of done() as it relates to mocha and where to place the call to the function when you have a sereis of nested requests
+*I learned the purpose of done() as it relates to mocha and where to place the call to the function when you have a series of nested requests  
+*learn some basics of testing with chai.  
 ****
 #What items do I still not understand or what gaps have I identified in my knowledge?
 *I was really strong at using the browser debugging tool.  I am very weak at using debugging tools with node.  
