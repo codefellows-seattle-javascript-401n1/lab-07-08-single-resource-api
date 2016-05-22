@@ -13,5 +13,5 @@ const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function(){
   server.isRunning = true;
-  console.log('The server hath commenced!!!', port);
+  console.log('The server has commenced operations!!!', port);
 });
