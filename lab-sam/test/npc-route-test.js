@@ -109,12 +109,11 @@ describe('testing npc-route module', function(){
         this.res = res;
         this.npc = res.body;
         this.id = res.body.id;
-        console.log('DELETE before called and done@@@@');
         done();
       });
     });
-    console.log('THIS.ID is', this.id);
     it('should return status 200', (done)=>{
+      console.log('THIS.ID is', this.id);
       request.delete(`${serverUrl}/api/npc`)
       .send({id: `${this.id}`})
       .end((err, res)=>{

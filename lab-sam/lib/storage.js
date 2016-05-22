@@ -37,21 +37,19 @@ Storage.prototype.fetchNpc = function(schema, id){
 };
 
 Storage.prototype.removeNpc = function(schema, id){
-  console.log('Storage.removeNpc run');
   return new Promise((resolve, reject) => {
-    var id = `${this.dataDir}/${schema}/${id}`
-    console.log('callin func removeNpc w/ id', id);
-    del([id])
+    var uuID = `${this.dataDir}/${schema}/${id}`;
+    console.log('callin func removeNpc w/ id', uuID);
+    del([uuID])
     .then(function(){
       console.log('storage removeNpc run');
-      resolve()
+      resolve();
     })
     .catch(function(err){
       if (err) {
-        console.log(err);
         reject(err);
         return;
       }
     });
   });
-}
+};

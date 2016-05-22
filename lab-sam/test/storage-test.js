@@ -35,4 +35,17 @@ describe('testing storage module', function(){
       });
     });
   });
+  describe('testing removeNpc', function(){
+    it('should return a note "Deleted"', function(done){
+      testStorage.removeNpc('npc', 1234567)
+      .then(function(npc){
+        expect(npc).to.equal(undefined);
+        done();
+      }).catch(function(err){
+        console.error(err);
+        expect(err).to.equal(undefined);
+        done();
+      });
+    });
+  });
 });

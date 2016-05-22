@@ -10,7 +10,6 @@ module.exports = function(router){
     if (req.body.name && req.body.classes) {
       const npc = new Npc(req.body.name, req.body.race, req.body.classes);
       storage.setNpc('npc', npc);
-      console.log(npc);
       return response(200, npc)(res);
     }
     response(400, 'bad request')(res);
@@ -22,26 +21,26 @@ module.exports = function(router){
     storage.fetchNpc('npc', req.url.query.id)
     .then(function(npcData){
       var npc = npcData;
-      console.log('GET NPC', npc);
       if (npc) {
         return response(200, npc)(res);
       }
     })
     .catch(function(err){
+      console.log(err);
       response(404, 'not found')(res);
     });
   })
   .delete('/api/npc', function(req, res){
     if (!req.body.id) {
-      console.log('DELETE 404ed');
       return response(400, 'bad request')(res);
     }
-    console.log('DELETE id =',req.body.id);
     storage.removeNpc('npc', req.body.id)
-    .then(function(id){
-      console.log('DELETE run on', id);
+    .then(function(){
+      console.log('DELETE run on', req.body.id);
+      return response(200, 'Deleted')(res);
     })
     .catch(function(err){
+      console.log(err);
       response(404, 'not found')(res);
     });
   });
