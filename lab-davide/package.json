@@ -24,7 +24,9 @@
     "eslint": "^2.10.2",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
     "mocha": "^2.4.5",
-    "nodemon": "^1.9.2"
+    "nodemon": "^1.9.2",
+    "superagent": "^2.0.0-alpha.3"
   }
 }
