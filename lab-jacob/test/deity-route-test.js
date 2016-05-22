@@ -29,13 +29,16 @@ describe('testing the deity-note route', function(){
     done();
   });
 
-  describe('testing method post on endpoint /api/deity', function(){
+  var testId;
+
+  describe('testing post method on endpoint /api/deity', function(){
     before((done) => {
       request.post(`${serverUrl}/api/deity`)
         .send({name: 'testyMcTestFace'})
         .end((err, res) => {
           this.res = res;
           this.deity = res.body;
+          testId = res.body.id;
           done();
         });
     });
@@ -44,6 +47,25 @@ describe('testing the deity-note route', function(){
       expect(this.res.status).to.equal(200);
     });
     it('should return a a deity name', () =>{
+      expect(this.deity.name).to.equal('testyMcTestFace');
+    });
+  });
+
+  describe('testing get method on endpoint /api/deity', function(){
+    before((done) => {
+      request.get(`${serverUrl}/api/deity`)
+        .query({id: testId})
+        .end((err, res) => {
+          this.res = res;
+          this.deity = res.body;
+          done();
+        });
+    });
+
+    it('should return a status 200', () => {
+      expect(this.res.status).to.equal(200);
+    });
+    it('should return a deity name', () => {
       expect(this.deity.name).to.equal('testyMcTestFace');
     });
   });

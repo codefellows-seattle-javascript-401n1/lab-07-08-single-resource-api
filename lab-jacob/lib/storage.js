@@ -34,7 +34,7 @@ Storage.prototype.deleteDeity = function(schema, deity){
     fs.unlink(`${this.dataDir}/${schema}/${deity.id}`, function(err){
       if (err) return (err);
       try{
-        resolve(deity);
+        resolve(err);
       } catch (err) {
         reject(err);
       }
