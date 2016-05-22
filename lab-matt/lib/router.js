@@ -42,8 +42,10 @@ Router.prototype.route = function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         return routes[req.method][req.url.pathname](req, res);
       }
+      console.log('test test test');
       fourOhFour(res);
-    }).catch(function(err){
+    }).catch(function(){
+      console.log('test catch');
       fourOhFour(res);
     });
   };
@@ -53,6 +55,6 @@ function fourOhFour(res){
   res.writeHead(404, {
     'Content-Type': 'application/json'
   });
-  res.write(JSON.stringify('not found'));
+  res.write(JSON.stringify('ITS ME'));
   res.end();
 }
