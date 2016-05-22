@@ -1,0 +1,28 @@
+{
+  "name": "lab-07-08-api",
+  "version": "0.0.1",
+  "description": "my single source RESTful api",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "taylor.wirtz@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
+    "superagent": "^2.0.0-alpha.3"
+  },
+  "dependencies": {
+    "del": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "uuid": "^2.0.2"
+  }
+}
