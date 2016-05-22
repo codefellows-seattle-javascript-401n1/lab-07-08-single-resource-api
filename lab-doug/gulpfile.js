@@ -1,6 +1,6 @@
 /*
 have a test task for running mocha
-have a nodemon task that restarts your server any time a change has been bade to your .js files
+have a nodemon task that restarts your server any time a change has been made to your .js files
 */
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
@@ -13,7 +13,9 @@ const chaiHttp = require('chai-http');
 const paths = ['*.js', 'lib/*.js', 'model/*.js', 'test/*.js', 'route/*.js'];
 
 gulp.task('lint', function(){
-  gulp.src(paths).pipe.eslint()).pipe(eslint.format);
+  gulp.src(paths)
+  .pipe.eslint()
+  .pipe(eslint.format);
 });
 
 gulp.task('nodemon', function(){

@@ -44,4 +44,48 @@ describe('testing matchscore-route module ', function(){
       expect(this.matchScore.distance).to.equal(600);
     });
   });
+  describe('Testing  GET method on endpoint /api/matchscore', function(){
+    before((done) => {
+      request.post(`${serverUrl}/api/matchscore`)
+      .send({distance: 600, score: 588, xCount: 15 })
+      .end((err, res) => {
+        this.res = res;
+        this.matchScore = res.body;
+        request.get(`${serverUrl}/api/matchscore`)
+        .query(`uuid=${this.matchScore.uuid}`)
+          .end((err, res) => {
+            this.getRes = res;
+            this.getResBody = res.body;
+            done();
+          });
+      });
+    });
+    it('should return a matchScore distance of  600', () => {
+      expect(this.getResBody.distance).to.equal(600);
+    });
+  });
+
+  describe('Testing  failed GET method on endpoint /api/matchscore: ', function(){
+    before((done) => {
+      request.post(`${serverUrl}/api/matchscore`)
+      .send({distance: 600, score: 588, xCount: 15 })
+      .end((err, res) => {
+        this.res = res;
+        this.matchScore = res.body;
+        request.get(`${serverUrl}/api/matchscore`)
+        .query('uuid=0001')
+          .end((err, res) => {
+            this.getRes = res;
+            this.getResBody = res.body;
+            done();
+          });
+      });
+    });
+    it('should return a response code of 404', () => {
+      expect(this.getRes.status).to.equal(404);
+    });
+    it('should provide json string res of "not found"', () => {
+      expect(this.getResBody).to.equal('not found');
+    });
+  });
 });
