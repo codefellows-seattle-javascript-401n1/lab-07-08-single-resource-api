@@ -55,12 +55,12 @@ describe('testing npc-route module', function(){
       request.post(`${serverUrl}/api/npc`)
       .send('hello test')
       .end(function(err, res){
-          expect(res.status).to.equal(400);
-          expect(res.body).to.equal('Bad request');
-          done();
-        });
+        expect(res.status).to.equal(400);
+        expect(res.body).to.equal('Bad request');
+        done();
       });
     });
+  });
 
   describe('testing the GET method on endpoint api/npc', function(){
     before((done)=>{
@@ -109,9 +109,11 @@ describe('testing npc-route module', function(){
         this.res = res;
         this.npc = res.body;
         this.id = res.body.id;
+        console.log('DELETE before called and done@@@@');
         done();
       });
     });
+    console.log('THIS.ID is', this.id);
     it('should return status 200', (done)=>{
       request.delete(`${serverUrl}/api/npc`)
       .send({id: `${this.id}`})

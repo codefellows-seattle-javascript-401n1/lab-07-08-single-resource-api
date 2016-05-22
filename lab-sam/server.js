@@ -13,7 +13,7 @@ const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function(){
   server.isRunning = true;
-  console.log('server up :::', port);
+  console.log('server up on PORT', port);
 });
 
 // test POST = cat ./test/test-npc.json | http POST localhost:3000/api/npc

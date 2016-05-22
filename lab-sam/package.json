@@ -28,6 +28,7 @@
     "superagent": "^2.0.0-alpha.3"
   },
   "dependencies": {
+    "del": "^2.2.0",
     "node-uuid": "^1.4.7"
   }
 }
