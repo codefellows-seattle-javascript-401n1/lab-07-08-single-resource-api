@@ -7,6 +7,9 @@ const server = require('../server');
 const port = process.env.PORT || 3000;
 const serverUrl = `http://localhost:${port}`;
 
+const Server = require('../lib/storage');
+const newStorage = new Server(`${__dirname}/../data/notes`);
+
 
 describe('Testing reminder route module', function() {
   before(function(done) {
@@ -110,5 +113,41 @@ describe('Testing reminder route module', function() {
       });
   });
 
+  describe('testing POST method and completion on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api`)
+      .send({content: 'troll wat'})
+      .end((err, res) => {
+        this.res = res;
+        this.reminder.id = res.body.id;
+        done();
+      });
+    });
+    it('return a status 200 on creation of new reminder', (done) => {
+      newStorage.setItem('notes', {content: 'troll wat', remindMe: 'tomorrow'})
+        .then(function(reminder) {
+          expect(reminder.content).to.equal('troll wat');
+          expect(reminder.remindMe).to.equal('tomorrow');
+          done();
+        }).catch(function(err) {
+          console.error(err);
+          expect(err).to.equal(undefined);
+          done();
+        });
+    });
+  });
+
+  describe('testing DELETE method on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`).end((err, res) => {
+        this.res = res;
+        this.reminder.id = res.body.id;
+        done();
+      });
+    });
+  });
+  it('should return status 200 of completed deletion', () => {
+    expect(this.res).to.equal(200);
+  });
 
 });
