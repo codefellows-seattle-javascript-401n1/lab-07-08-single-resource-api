@@ -6,7 +6,7 @@ module.exports = function(req){
     if(/(POST|PUT|DELETE)/.test(req.method)) {
       req.body = '';
       req.on('data',function(data){
-        req.body += data.string();
+        req.body += data.toString();
       });
 
       req.on('end', function(){

@@ -51,18 +51,19 @@ Router.prototype.route = function(){
       if(typeof routes[req.method][req.url.pathname] === 'function') {
         return routes[req.method][req.url.pathname](req, res);
       }
-      fourOhFour(res);
-    }).catch(function(err){
-      fourOhFour(res);
+      fourOhFour('router-route', res);
+    }).catch(function(err,res){
+      console.log(err);
+      fourOhFour(err,res);
     });
   };
 };
 
-function fourOhFour(res){
+function fourOhFour(err,res){
   res.writeHead(404, {
     'Content-Type': 'application/json'
   });
 
-  res.write(JSON.stringify('not found'));
+  res.write(JSON.stringify('not found' + err));
   res.end();
 }

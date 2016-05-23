@@ -7,7 +7,9 @@ const router = new Router();
 //created const var port that is being assigned the env variable//
 const port = process.env.PORT || 3000;
 
-router.get('/', function(req, res){
+
+
+router.get('/api/note', function(req, res){
   res.writeHead(200);
   res.write('yaaaaaaa our router works!');
   res.end();
