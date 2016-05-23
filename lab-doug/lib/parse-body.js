@@ -12,9 +12,11 @@ module.exports = function(req){
       req.on('end', function(){
         try{
           // console.log('enter req.body try1: ', req.body);
-          req.body = JSON.parse(req.body);
+          if(req.body){
+            req.body = JSON.parse(req.body);
           // console.log('enter req.body try2: ', req.body);
-          resolve();
+            resolve();
+          }
         }catch(err){
           // console.log('req.body catch called');
           reject(err);

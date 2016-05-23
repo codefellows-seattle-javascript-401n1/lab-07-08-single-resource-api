@@ -44,4 +44,67 @@ describe('testing matchscore module ', function(){
       expect(this.matchScore.distance).to.equal(600);
     });
   });
+  describe('Testing  POST method on endpoint /api/matchscore', function(){
+    before((done) => {
+      request.post(`${serverUrl}/api/matchscore`)
+      .send()
+      .end((err, res) => {
+        this.res = res;
+        this.matchScore = res.body;
+        done();
+      });
+    });
+
+    it('should set statusCode 400: ', () => {
+      expect(this.res.status).to.equal(400);
+    });
+    it('should map JSON for matchScore object', () => {
+      expect(this.matchScore).to.equal('bad request');
+    });
+  });
+
+  describe('Testing  GET success on endpoint /api/matchscore', function(){
+    before((done) => {
+      request.post(`${serverUrl}/api/matchscore`)
+      .send({distance: 600, score: 588, xCount: 15 })
+      .end((err, res) => {
+        this.res = res;
+        this.matchScore = res.body;
+        request.get(`${serverUrl}/api/matchscore`)
+        .query(`uuid=${this.matchScore.uuid}`)
+          .end((err, res) => {
+            this.getRes = res;
+            this.getResBody = res.body;
+            done();
+          });
+      });
+    });
+    it('should set a response code of 200 to prove GET is working', () => {
+      expect(this.getRes.status).to.equal(200);
+    });
+  });
+
+  describe('Testing  failed GET method with invalid uuid: ', function(){
+    before((done) => {
+      request.post(`${serverUrl}/api/matchscore`)
+      .send({distance: 600, score: 588, xCount: 15 })
+      .end((err, res) => {
+        this.res = res;
+        this.matchScore = res.body;
+        request.get(`${serverUrl}/api/matchscore`)
+        .query('uuid=0001')//invalid uuid
+          .end((err, res) => {
+            this.getRes = res;
+            this.getResBody = res.body;
+            done();
+          });
+      });
+    });
+    it('should return a response code of 404', () => {
+      expect(this.getRes.status).to.equal(404);
+    });
+    it('should provide json string res of "not found"', () => {
+      expect(this.getResBody).to.equal('not found');
+    });
+  });
 });

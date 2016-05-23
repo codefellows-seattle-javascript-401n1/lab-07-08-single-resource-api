@@ -50,7 +50,7 @@ Router.prototype.route = function(){
       }
     }).catch(function(err){
       console.log('catch called with error: ', err);
-      return response(404, 'not found')(res);
+      return response(404, err)(res);
     });
   };
 };
