@@ -55,8 +55,8 @@ describe('testing matchscore module ', function(){
       });
     });
 
-    it('should set statusCode 400: ', () => {
-      expect(this.res.status).to.equal(400);
+    it('should set statusCode 404: ', () => {
+      expect(this.res.status).to.equal(404);
     });
     it('should map JSON for matchScore object', () => {
       expect(this.matchScore).to.equal('bad request');

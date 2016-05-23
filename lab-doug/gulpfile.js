@@ -1,21 +1,20 @@
-/*
-have a test task for running mocha
-have a nodemon task that restarts your server any time a change has been made to your .js files
-*/
+'use strict';
+
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const mocha = require('mocha');
 const nodemon = require('gulp-nodemon');
-const gulpMocha = require('gulp-mocha');
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+const mocha = require('gulp-mocha');
+const nyan = require('karma-nyan-reporter');
+
+
 
 const paths = ['*.js', 'lib/*.js', 'model/*.js', 'test/*.js', 'route/*.js'];
 
-gulp.task('lint', function(){
+gulp.task('eslint', function(){
   gulp.src(paths)
-  .pipe.eslint()
-  .pipe(eslint.format);
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(eslint.failAfterError());
 });
 
 gulp.task('nodemon', function(){
@@ -25,12 +24,11 @@ gulp.task('nodemon', function(){
   });
 });
 
-gulp.task('mocha', function(){
-  return gulp.src(test.js).path();
+gulp.task('test', () => {
+  return gulp.src('matchscore-test.js', {read: false})
+  .pipe(mocha({reporter: 'nyan'}));
 });
 
-gulp.task('test', function(){
-  //run mocha
-});
 
-gulp.task('default', ['lint', 'mocha']);
+
+gulp.task('default', ['eslint', 'test']);

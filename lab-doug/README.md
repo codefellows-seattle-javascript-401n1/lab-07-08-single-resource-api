@@ -14,3 +14,5 @@
 #What items do I still not understand or what gaps have I identified in my knowledge?
 *I was really strong at using the browser debugging tool.  I am very weak at using debugging tools with node.  
 *how to automate test when you have dynamically generated items like UUID?  We did a work around in GET test that required nested requests.  Not sure if that is a good solution.  
+*how do you list multiple files under your 'test' task?  
+*need more work with mocha gulp-mocha and chai.  Tests are not running properly from gulp file
