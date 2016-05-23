@@ -23,6 +23,7 @@ describe('testing note-route module', function(){
     if (server.isRunning){
       server.close(function(){
         server.isRunning = false;
+        console.log('server shut down');
         done();
       });
       return;
@@ -47,7 +48,7 @@ describe('testing note-route module', function(){
     });
 
     it('should return a note', ()=>{
-      expect(this.note.content).to.equal('hello');
+      expect(this.note.content.content).to.equal('hello');
     });
   });
 
@@ -74,29 +75,9 @@ describe('testing note-route module', function(){
 //get testing
   describe('testing method GET on endpoint api/note with bad id', function(){
     before((done)=>{
+      var id = '98765';
       console.log('serverUrl', serverUrl);
-      request.get(`${serverUrl}/api/note?id=98765`)
-        .send()
-        .end((err, res) => {
-          this.res = res;
-          this.note = res.text;
-          done();
-        });
-    });
-
-    it('should return status 400', ()=>{
-      expect(this.res.status).to.equal(400);
-    });
-
-    it('should return \"bad request\"', ()=>{
-      expect(this.res.text).to.equal('\"bad request\"');
-    });
-  });
-
-  describe('testing method GET on endpoint api/note with bad parameter', function(){
-    before((done)=>{
-      console.log('serverUrl', serverUrl);
-      request.get(`${serverUrl}/api/note/?`)
+      request.get(`${serverUrl}` + '/api/note/?id==', id)
         .send()
         .end((err, res) => {
           this.res = res;
@@ -114,19 +95,35 @@ describe('testing note-route module', function(){
     });
   });
 
-  describe('testing method GET on endpoint /api/note/?content=hello', function(){
+  describe('testing method GET on endpoint api/note with bad parameter', function(){
     before((done)=>{
       console.log('serverUrl', serverUrl);
-      request.post(`${serverUrl}/api/note`)
-        .send({content: 'hello'})
+      request.get(`${serverUrl}/api/note`)
+        .end((err, res) => {
+          this.res = res;
+          this.note = res.text;
+          done();
+        });
+    });
+
+    it('should return status 400', ()=>{
+      expect(this.res.status).to.equal(400);
+    });
+
+    it('should return \"bad request\"', ()=>{
+      expect(this.res.text).to.equal('\"bad request\"');
+    });
+  });
+
+  describe('testing method GET on endpoint /api/note/?id=123456', function(){
+    before((done)=>{
+      console.log('serverUrl', serverUrl);
+      const url = `${serverUrl}/api/note`;
+      request.get(url)
+        .query('id=123456')
         .end((err, res) => {
           this.res = res;
           this.note = res.body;
-        });
-      request.get(`${serverUrl}/api/note/?content=hello`)
-        .end((err, res) => {
-          this.res = res;
-          this.note = res.content;
           done();
         });
     });
@@ -136,7 +133,28 @@ describe('testing note-route module', function(){
     });
 
     it('should return a note', ()=>{
-      expect(this.note.content).to.equal('hello');
+      expect(this.note).to.equal('123456');
+    });
+  });
+// delete test
+  describe('testing method DELETE on endpoint /api/note', function(){
+    before((done)=>{
+      console.log('serverUrl', serverUrl);
+      const url = `${serverUrl}/api/note`;
+      request.del(url + '123456.copy')
+        .end((err, res) => {
+          this.res = res;
+          this.note = res.body;
+          done();
+        });
+    });
+
+    it('should return status 200', ()=>{
+      expect(this.res.status).to.equal(200);
+    });
+
+    it('should return a note', ()=>{
+      expect(this.res.text).to.equal('\"post deleted\"');
     });
   });
 });
