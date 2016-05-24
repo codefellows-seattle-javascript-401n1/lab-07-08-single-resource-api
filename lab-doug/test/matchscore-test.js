@@ -29,8 +29,11 @@ describe('testing matchscore module ', function(){
   describe('Testing  POST method on endpoint /api/matchscore', function(){
     before((done) => {
       request.post(`${serverUrl}/api/matchscore`)
+      //convert an object to JSON
       .send({distance: 600, score: 588, xCount: 15 })
+      //end takes an err and res
       .end((err, res) => {
+        //'this' is the desribe block, so 'this is availble to it blocks'
         this.res = res;
         this.matchScore = res.body;
         done();
@@ -51,6 +54,8 @@ describe('testing matchscore module ', function(){
       .end((err, res) => {
         this.res = res;
         this.matchScore = res.body;
+        //letting the before block know that it is complete.
+        //the program now goes on to execute it blocks
         done();
       });
     });

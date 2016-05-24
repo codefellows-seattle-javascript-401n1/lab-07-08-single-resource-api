@@ -1,6 +1,6 @@
 #Building a single-resource-api Router  
 
-#What I learned
+#What I learned in lab-07
 *promises: getting comfortable with the basic syntax and the order of execution  
 *how to tie together the server, router object, route object, and registering the routes  
 *the value of abstracting simple repetitive tasks like err responses  
@@ -10,6 +10,11 @@
 *learned the basics of Postman plug-in for chrome  
 *I learned the purpose of done() as it relates to mocha and where to place the call to the function when you have a series of nested requests  
 *learn some basics of testing with chai.  
+
+****
+#What I learned in Lab-08
+*For the first time, I could actually visualize the program before I started coding and determine what code needed to be modified to change the service to meet the objectives of lab-08.  Although I did not know the exact code that needed to be written, I understood it in general terms before I started coding.
+
 ****
 #What items do I still not understand or what gaps have I identified in my knowledge?
 *I was really strong at using the browser debugging tool.  I am very weak at using debugging tools with node.  
