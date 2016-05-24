@@ -13,12 +13,12 @@ describe('testing people-route module', function(){
     console.log('hello');
     if (!server.isRunning){
       server.listen(port, function(){
-        console.log('Testing People Route Sever Not Running');
+        console.log('Testing People Route Server Not Running');
         // done();
       });
       return;
     }
-    console.log('Testing People Route Sever Running');
+    console.log('Testing People Route Server Running');
     // done();
   });
 
@@ -94,5 +94,23 @@ describe('testing people-route module', function(){
         });
     });
   });
+
+  describe('testing method DELETE on endpoint /api/people', function(){
+    it('should return status 200', () => {
+      request
+        .del(serverUrl + '/api/people?name=testname!')
+        .end(function(err, res){
+          expect(res.status).to.equal(200);
+        });
+    });
+
+    // it('should return status 404', () => {
+    //   request
+    //     .del(serverUrl + '/api/people?name=doesNotExist')
+    //     .end(function(err, res){
+    //       expect(res.status).to.equal(404);
+    //     });
+    // });
+  }); // end of delete test
 
 }); // END OF PEOPLE-ROUTE-TEST MODULE
