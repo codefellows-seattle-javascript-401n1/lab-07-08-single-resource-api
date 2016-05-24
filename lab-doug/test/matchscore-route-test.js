@@ -60,7 +60,7 @@ describe('testing matchscore-route module ', function(){
       expect(this.res.status).to.equal(404);
     });
     it('should provide json string response of "not found": ', () => {
-      expect(this.getResBody).to.equal('not found');
+      expect(this.matchScore).to.equal('not found');
     });
   });
 

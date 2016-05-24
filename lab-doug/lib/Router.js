@@ -45,9 +45,10 @@ Router.prototype.route = function(){
         //this line just completes running this function
         return routes[req.method][req.url.pathname](req, res);
       }
-    }).catch(function(err){
-      console.log('catch called with error: ', err);
       return response(404, 'not found')(res);
+    }).catch(function(err){
+      console.log('catch called with error: ', err);  
+      return response(400, 'bad request')(res);
     });
   };
 };

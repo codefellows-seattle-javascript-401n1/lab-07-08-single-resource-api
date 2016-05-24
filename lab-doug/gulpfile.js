@@ -22,7 +22,7 @@ gulp.task('nodemon', function(){
 });
 
 gulp.task('test', () => {
-  return gulp.src('matchscore-test.js', {read: false})
+  return gulp.src(['./test/matchscore-test.js', './test/matchscore-route-test.js'], {read: false})
   .pipe(mocha({reporter: 'nyan'}));
 });
 
