@@ -8,7 +8,6 @@ const storage = module.exports = function(dataDir){
 
 storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject)=>{
-    console.log('got it!');
     fs.writeFile(`${this.dataDir}/${schema}/${item.id}`, JSON.stringify(item), function(err) {
       if(err) reject(err);
       resolve(item);
@@ -19,7 +18,6 @@ storage.prototype.setItem = function(schema, item){
 storage.prototype.fetchItem = function(schema, itemId){
   return new Promise((resolve, reject)=>{
     fs.readFile(`${this.dataDir}/${schema}/${itemId}`, function(err, item){
-      console.log('The item is ', item);
       if(err) reject(err);
       item = JSON.parse(item);
       resolve(item);
