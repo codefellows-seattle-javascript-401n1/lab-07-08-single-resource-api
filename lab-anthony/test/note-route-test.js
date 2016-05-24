@@ -32,7 +32,6 @@ describe('testing note-route module', function(){
   describe('testing method POST on endpoint /api/note', function(){
     describe('testing successful POST request', function(){
       before((done)=> {
-        console.log('serverUrl', serverUrl);
         request.post(`${serverUrl}/api/note`)
           .send({content: 'This is a test note!'})
           .end((err,res)=>{
@@ -55,7 +54,6 @@ describe('testing note-route module', function(){
   describe('testing method POST', function() {
     describe('testing bad POST request', function(){
       before((done)=> {
-        console.log('serverUrl', serverUrl);
         request.post(`${serverUrl}/api/note`)
           .send({})
           .end((err,res)=>{
@@ -73,7 +71,6 @@ describe('testing note-route module', function(){
   describe('testing method GET on endpoint /api/note', function(){
     describe('testing successful GET request', function() {
       before((done)=> {
-        console.log('serverUrl', serverUrl);
         request.post(`${serverUrl}/api/note`)
           .send({content: 'This is a test note!'})
           .end((err,res)=>{
@@ -93,7 +90,6 @@ describe('testing note-route module', function(){
   describe('testing method GET on endpoint /api/note', function(){
     describe('testing bad GET request', function() {
       before((done)=> {
-        console.log('serverUrl', serverUrl);
         request.post(`${serverUrl}/api/note`)
           .send({content: 'This is a test note!'})
           .end(()=>{
@@ -113,10 +109,9 @@ describe('testing note-route module', function(){
   describe('testing method GET on endpoint /api/note', function(){
     describe('testing bad GET request', function() {
       before((done)=> {
-        console.log('serverUrl', serverUrl);
         request.post(`${serverUrl}/api/note`)
           .send({content: 'This is a test note!'})
-          .end((err,res)=>{
+          .end((err, res)=>{
             request.get(`${serverUrl}/api/note?id=${res.body.id + 1}`)
             .end((err, res)=>{
               this.res = res;
