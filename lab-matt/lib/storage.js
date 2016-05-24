@@ -4,7 +4,6 @@ const fs = require('fs');
 
 const Storage = module.exports = function(dataDir){
   this.dataDir = dataDir;
-  console.log('this is the dataDir from storage.js' + dataDir);
 };
 
 Storage.prototype.setItem = function(schema, item){

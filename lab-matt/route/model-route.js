@@ -49,7 +49,6 @@ module.exports = function(router){
 
 
   }).delete('/api/model/delete', function(req, res){
-    console.log('hit delete /api/model');
     try{
       if(req.body){
         req.body = JSON.parse(req.body);
