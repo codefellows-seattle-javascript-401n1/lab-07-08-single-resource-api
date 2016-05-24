@@ -2,6 +2,7 @@
 
 const request = require('superagent');
 const expect = require('chai').expect;
+const fs = require('fs');
 
 const server = require('../server');
 const port = process.env.PORT || 3000;
@@ -30,12 +31,13 @@ describe('testing note-route module', function(){
   });
   describe('testing method GET error on endpoint /api/note', function(){
     before((done) =>{
-      const testId = {id:123};
+      const testId = 123;
       console.log('serverUrlGet', serverUrlGet);
-      request.get(`${serverUrlGet}/api/note?id=${testId}`)
+      request.get(`${serverUrl}/api/note?id=${testId}`)
         .end((err,res) =>{
           this.res =res;
           this.note = res.body;
+          console.log(this.note);
           done();
         });
     });
@@ -43,7 +45,7 @@ describe('testing note-route module', function(){
       expect(this.res.status).to.equal(404);
     });
     it('should return an error', ()=>{
-      expect(this.note.content).to.equal('not found');
+      expect(this.note.content).to.equal(undefined);
     });
   });
   describe('testing method POST on endpoint /api/note', function(){
@@ -64,5 +66,30 @@ describe('testing note-route module', function(){
       expect(this.note.content).to.equal('test note!');
     });
   });
-
+  describe('testing method PUT on endpoint /api/note', function(){
+    before((done)=>{
+      console.log('serverUrl', serverUrl);
+      request.put(`${serverUrl}/api/note`)
+      .send({id:this.note.id, content: 'new test note!!'})
+      .end((err, res) =>{
+        this.res = res;
+        this.note = res.body;
+        done();
+      });
+    });
+    describe('testing method DELETE on endpoint /api/note', function(){
+      before((done) =>{
+        request.delete(`${serverUrl}/api/note`)
+        .send({id:this.note.id})
+        .end((err,res) =>{
+          this.res = res;
+          // console.log({id:this.note.id});
+          fs.readFile(__dirname + '/data/note', function(err) {
+            expect(err).to.equal(true);
+            done();
+          });
+        });
+      });
+    });
+  });
 });

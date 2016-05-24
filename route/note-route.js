@@ -26,21 +26,21 @@ module.exports = function(router){
   })
   //Update Existing
   .put('/api/note', function(req,res){
-    const note = notePool[req.url.query.id];
+    const note = notePool[req.body.id];
     if(note){
-      notePool[req.body.content];
-      return response(201, 'New note created' +note.id)(res);
+      notePool[req.body.id].content = req.body.content;
+      return response(201, 'Note updated' +note.id)(res);
     }
     response(400, 'bad request')(res);
   })
   .delete('/api/note'), function(req,res){
-    const note = notePool[req.url.query.id];
-    if(note){
-      delete notePool[req.body.content];
-      delete note[req.id];
-      return response(200, 'Note deleted')(res);
-    } else{
-      response(400, 'bad request')(res);
+    if (req.body){
+      const note = notePool[req.body.id];
+      if(note){
+        delete notePool[req.body.id];
+        return response(200, 'Note deleted')(res);
+      }
     }
+    response(400, 'bad request')(res);
   };
 };
