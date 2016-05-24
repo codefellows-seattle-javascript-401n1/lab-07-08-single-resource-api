@@ -42,15 +42,12 @@ Router.prototype.route = function(){
       parseUrl(req)
     ]).then(function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
-        // console.log('entered then of router.route');
-        // console.log('method: ', req.method);
-        // console.log('pathname: ', req.url.pathname);
-        // console.log('route:', routes[req.method][req.url.pathname]);
+        //this line just completes running this function
         return routes[req.method][req.url.pathname](req, res);
       }
     }).catch(function(err){
       console.log('catch called with error: ', err);
-      return response(404, err)(res);
+      return response(404, 'not found')(res);
     });
   };
 };
