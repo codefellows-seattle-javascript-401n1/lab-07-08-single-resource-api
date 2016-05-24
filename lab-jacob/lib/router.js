@@ -48,7 +48,7 @@ Router.prototype.route = function(){
       res.write(JSON.stringify('not found'));
       res.end();
     }).catch(function(err){
-      console.log(err, 'catch block');
+      // console.log(err, 'catch block');
       res.writeHead(404, {'Content-Type': 'application/json'});
       res.write(JSON.stringify(err));
       res.end();

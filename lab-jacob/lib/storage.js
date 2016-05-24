@@ -15,10 +15,10 @@ Storage.prototype.createDeity = function(schema, deity){ // sets item in specifi
   });
 };
 
-Storage.prototype.fetchDeity = function(schema, deity){ // fetches item from specified data storage directory
+Storage.prototype.fetchDeity = function(schema, id){ // fetches item from specified data storage directory
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${deity.id}`, function(err, deity){
-      if (err) return (err);
+    fs.readFile(`${this.dataDir}/${schema}/${id}`, function(err, deity){
+      if (err) return reject(err);
       try {
         deity = JSON.parse(deity);
         resolve(deity);
@@ -29,7 +29,7 @@ Storage.prototype.fetchDeity = function(schema, deity){ // fetches item from spe
   });
 };
 
-Storage.prototype.deleteDeity = function(schema, deity){
+Storage.prototype.deleteDeity = function(schema, deity){ // deletes deity from data storage
   return new Promise((resolve, reject) => {
     fs.unlink(`${this.dataDir}/${schema}/${deity.id}`, function(err){
       if (err) return (err);
