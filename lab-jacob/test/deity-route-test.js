@@ -132,8 +132,8 @@ describe('testing the deity-note route', function(){
       request.del(`${serverUrl}/api/deity`)
         .query({id: testId})
         .end((err, res) => {
-          console.log('heres testing error');
-          if (err) console.log(err);
+          //console.log('heres testing error');  long error message for debugging delete
+          //if (err) console.log(err);
           this.res = res;
           this.deity = res.body;
           done();
