@@ -23,7 +23,7 @@ describe('testing the storage module', function(){
 
   describe('fetching a resource with fetch Deity', function() {
     it('should return an item from storage', function(done){
-      storageDirectory.fetchDeity('deity', {id: 123345})
+      storageDirectory.fetchDeity('deity',  123345)
       .then(function(deity){
         console.log(deity.name, deity.power, deity.id);
         expect(deity.id).to.equal(123345);

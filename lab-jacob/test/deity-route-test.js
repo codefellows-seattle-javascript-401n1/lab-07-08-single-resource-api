@@ -29,12 +29,12 @@ describe('testing the deity-note route', function(){
     done();
   });
 
-  var testId;
+  var testId; //global variable for storing posted UUID
 
-  describe('testing post method on endpoint /api/deity', function(){
+  describe('testing post method on endpoint /api/deity', function(){ // beginning of tests for the post methods
     before((done) => {
       request.post(`${serverUrl}/api/deity`)
-        .send({name: 'testyMcTestFace'})
+        .send({name: 'testyMcTestFace', power: 'testytests'})
         .end((err, res) => {
           this.res = res;
           this.deity = res.body;
@@ -46,12 +46,31 @@ describe('testing the deity-note route', function(){
     it('should return status 200', () => {
       expect(this.res.status).to.equal(200);
     });
-    it('should return a a deity name', () =>{
+    it('should return a deity name', () =>{
       expect(this.deity.name).to.equal('testyMcTestFace');
     });
   });
 
-  describe('testing get method on endpoint /api/deity', function(){
+  describe('testing post method bad request', function() {
+    before ((done) => {
+      request.post(`${serverUrl}/api/deity`)
+        .send({})
+        .end((err, res) => {
+          this.res = res;
+          this.deity = res.body;
+          done();
+        });
+    });
+
+    it('should return a status 400', () => {
+      expect(this.res.status).to.equal(400);
+    });
+    it('should return nothing', () => {
+      expect(this.deity).to.equal('bad request');
+    });
+  });
+
+  describe('testing a successful get method on endpoint /api/deity', function(){ // beginning of tests for the get method
     before((done) => {
       request.get(`${serverUrl}/api/deity`)
         .query({id: testId})
@@ -67,6 +86,65 @@ describe('testing the deity-note route', function(){
     });
     it('should return a deity name', () => {
       expect(this.deity.name).to.equal('testyMcTestFace');
+    });
+  });
+
+  describe('testing get method not found', function(){
+    before((done) => {
+      request.get(`${serverUrl}/api/deity`)
+        .query({id: 1234356456})
+        .end((err, res) => {
+          this.res = res;
+          this.deity = res.body;
+          done();
+        });
+    });
+
+    it('should return a status 404', () => {
+      expect(this.res.status).to.equal(404);
+    });
+    it('should return a not found in body', () => {
+      expect(this.deity).to.equal('not found');
+    });
+  });
+
+  describe('testing get method bad request', function(){
+    before((done) => {
+      request.get(`${serverUrl}/api/deity`)
+        .query({})
+        .end((err, res) => {
+          this.res = res;
+          this.deity = res.body;
+          done();
+        });
+    });
+
+    it('should return a status of 400', () => {
+      expect(this.res.status).to.equal(400);
+    });
+    it('should return a bad request in body', () => {
+      expect(this.deity).to.equal('bad request');
+    });
+  });
+
+  describe('testing delete method on endpoint /api/deity', function(){ // test for the delete method
+    before((done) => {
+      request.del(`${serverUrl}/api/deity`)
+        .query({id: testId})
+        .end((err, res) => {
+          console.log('heres testing error');
+          if (err) console.log(err);
+          this.res = res;
+          this.deity = res.body;
+          done();
+        });
+    });
+
+    it('should return a status message of 200', () => {
+      expect(this.res.status).to.equal(200);
+    });
+    it('should delete the deity object', () => {
+      expect(this.deity).to.equal();
     });
   });
 });
