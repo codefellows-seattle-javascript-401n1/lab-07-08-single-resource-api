@@ -8,10 +8,10 @@ const storage = new Storage('/home/sam/401/lab-07-08-single-resource-api/lab-sam
 module.exports = function(router){
   router.post('/api/npc', function(req, res){
     if (req.body.name && req.body.classes) {
-      const npc = new Npc(req.body.name, req.body.race, req.body.classes);
-      storage.setNpc('npc', npc);
+      var npc = new Npc(req.body.name, req.body.race, req.body.classes);
+      storage.setNpc('npc', npc)
       return response(200, npc)(res);
-    }
+    }//there should be a .then and .catch here but they keep breaking everyhting
     response(400, 'bad request')(res);
   })
   .get('/api/npc', function(req, res){

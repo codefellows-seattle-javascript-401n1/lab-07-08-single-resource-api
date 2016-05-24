@@ -17,7 +17,7 @@ Storage.prototype.setNpc = function(schema, npc){
       }
       resolve(npc);
     });
-    console.log('storage SETNPC fired');
+    console.log('storage SETNPC fired', npc);
   });
 };
 
