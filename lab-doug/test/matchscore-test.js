@@ -33,7 +33,7 @@ describe('testing matchscore module ', function(){
       .send({distance: 600, score: 588, xCount: 15 })
       //end takes an err and res
       .end((err, res) => {
-        //'this' is the desribe block, so 'this is availble to it blocks'
+        //'this' is the desribe block, so 'this' is available to 'it' blocks within this describe block
         this.res = res;
         this.matchScore = res.body;
         done();
@@ -60,8 +60,8 @@ describe('testing matchscore module ', function(){
       });
     });
 
-    it('should set statusCode 404: ', () => {
-      expect(this.res.status).to.equal(404);
+    it('should set statusCode 400: ', () => {
+      expect(this.res.status).to.equal(400);
     });
     it('should map JSON for matchScore object', () => {
       expect(this.matchScore).to.equal('bad request');
