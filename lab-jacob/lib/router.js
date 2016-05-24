@@ -32,7 +32,7 @@ Router.prototype.delete = function(endpoint, callback){
   return this;
 };
 
-Router.prototype.route = function(){
+Router.prototype.route = function(){ //route function for Router object
   const routes = this.routes;
   return function(req, res){
     console.log('route function');
