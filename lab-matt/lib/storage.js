@@ -21,7 +21,6 @@ Storage.prototype.fetchItem = function(schema, item){
       if(err) return reject(err);
       try {
         item = JSON.parse(item);
-        console.log(item);
         resolve(item);
       } catch(err){
         reject(err);

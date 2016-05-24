@@ -90,7 +90,6 @@ describe('Testing the model-route module', function(){
     before((done) =>{
       request.post(`${serverUrl}/api/model/create`).send({name: 'Captain Underpants'}).end((err, res) => {
         this.res = res;
-        // this.res.id = res.id;
         request.get(`${serverUrl}/api/model/fetch?id=${res.body.id}`).end((err, res) => {
           this.res = res;
           done();
