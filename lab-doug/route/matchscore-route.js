@@ -21,6 +21,20 @@ module.exports = function(router){
     } else {
       response(404, 'not found')(res);
     }
+  }).put('/api/matchscore', function(req, res){
+    if(req.body){
+      var postUuid = req.body.uuid;
+      matchScoreStorage.deleteItem('matchscore', postUuid)
+      .then ((uuid, req) => {
+        matchScoreStorage.setItem('matchscore', req.body)
+        .then(function(item) {
+          response(200, item.body)(res);
+        }).catch(function(err){
+          response(400, 'bad request')(res);
+        });
+      });
+      response(404, 'not found')(res);
+    }
   }).get('/api/matchscore', function(req, res){
     matchScoreStorage.fetchItem('matchscore', req.url.query.uuid)
     .then(function(item){
@@ -30,7 +44,8 @@ module.exports = function(router){
     });
 
     //response(404, 'not found in matchscore-route.js')(res);
-  }).delete('/api/matchscore', function(req, res){
+  })
+  .delete('/api/matchscore', function(req, res){
     matchScoreStorage.deleteItem('matchscore', req.body.uuid)
     .then((uuid) => {
       return response(200, `the file with uuid ${uuid} was deleted successfully`)(res);
