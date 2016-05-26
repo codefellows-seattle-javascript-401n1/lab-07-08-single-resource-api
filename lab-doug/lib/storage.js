@@ -34,7 +34,7 @@ Storage.prototype.deleteItem = function(schema, uuid){
   return new Promise((resolve, reject) => {
     fs.unlink(`${this.dataDir}/${schema}/${uuid}.json`, function(err, item){
       if(err) return reject(err);
-      resolve();
+      resolve(uuid);
     });
   });
 };

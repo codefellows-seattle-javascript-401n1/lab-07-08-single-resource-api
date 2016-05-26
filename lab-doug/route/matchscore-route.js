@@ -5,7 +5,7 @@ const response = require('../lib/response');
 const Storage = require('../lib/Storage');
 const uuid = require('node-uuid');
 var matchScoreStorage = new Storage(__dirname + '/../test/data');
-var matchScorePool = {};
+//var matchScorePool = {};
 
 module.exports = function(router){
   router.post('/api/matchscore', function(req, res){
@@ -24,19 +24,19 @@ module.exports = function(router){
   }).get('/api/matchscore', function(req, res){
     matchScoreStorage.fetchItem('matchscore', req.url.query.uuid)
     .then(function(item){
-      console.log('value of item in "then" in matchscore-route.js: ', item);
       return response(200, item)(res);
-    }).catch(function(err){
-      return response(400, 'bad request in matchsocre-route.js')(res);
+    }).catch(function(){
+      return response(400, 'bad request in matchscore-route.js')(res);
     });
 
     //response(404, 'not found in matchscore-route.js')(res);
   }).delete('/api/matchscore', function(req, res){
-    if(matchScorePool[req.body.uuid]){
-      const uuid = matchScorePool[req.body.uuid];
-      delete matchScorePool[req.body.uuid];
-      return response(404, uuid)(res);
-    }
-    response(404, 'not found')(res);
+    matchScoreStorage.deleteItem('matchscore', req.body.uuid)
+    .then((uuid) => {
+      return response(200, `the file with uuid ${uuid} was deleted successfully`)(res);
+    }).catch(function(){
+      return response(400,'bad request' )(res);
+    });
+    //response(404, 'not found in matchscore-route.js')(res);
   });
 };
