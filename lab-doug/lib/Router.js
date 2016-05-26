@@ -41,14 +41,15 @@ Router.prototype.route = function(){
       parseBody(req),
       parseUrl(req)
     ]).then(function(){
+      console.log('req pathname in router.js then method: ', req.url.pathname);
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         //this line just completes running this function
         return routes[req.method][req.url.pathname](req, res);
       }
       return response(404, 'not found')(res);
     }).catch(function(err){
-      console.log('catch called with error: ', err);  
-      return response(400, 'bad request')(res);
+      console.log('catch called with error in router.jsL  ', err);
+      return response(400, 'bad request in router.js')(res);
     });
   };
 };
