@@ -17,7 +17,7 @@ Storage.prototype.setItem = function(schema, item){
 
 Storage.prototype.fetchItem = function(schema, id) {
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${id}`,function(err, item) {
+    fs.readFile(`${this.dataDir}/${schema}${id}`,function(err, item) {
       if(err) return reject(err);
       try {
         item = JSON.parse(item);
@@ -25,6 +25,15 @@ Storage.prototype.fetchItem = function(schema, id) {
       } catch(err){
         reject(err);
       }
+    });
+  });
+};
+
+Storage.prototype.deleteItem = function(schema, id) {
+  return new Promise((resolve, reject) => {
+    fs.unlink(`${this.dataDir}/${schema}/${id}`,function(err) {
+      if(err) return reject(err);
+      resolve();
     });
   });
 };

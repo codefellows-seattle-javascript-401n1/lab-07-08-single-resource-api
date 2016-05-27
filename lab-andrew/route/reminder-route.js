@@ -3,23 +3,34 @@
 const Reminder = require('../model/reminder');
 const response = require('../lib/response');
 const Storage = require('../lib/storage');
-const newStorage = new Storage(`${__dirname}/../data/`);
+const reminderStorage = new Storage(`${__dirname}/../data/`);
 const del = require('del');
 
 const reminderPool = {};
 
 module.exports = function(router) {
   router.post('/api/reminder', function(req, res) {
-    const reminder = new Reminder(req.body.id);
-    if (reminder){
-      reminder.content = req.body.content || req.content;
-      reminder.remindMe = req.body.remindMe || req.remindMe;
-      reminderPool[reminder.body] = reminder;
-      newStorage.setItem('notes', reminder);
-      return response(200, reminder)(res);
+    try {
+      if (req.body.content){
+        const reminder = new Reminder(req.body.content);
+        reminderPool[reminder.body] = reminder;
+        reminderStorage.setItem('notes', reminder)
+      .then(function() {
+        return response(200, reminder)(res);
+      }).catch(function(err) {
+        console.error('error on api/reminder POST', err);
+        response(500, 'server error')(res);
+      });
+        return;
+      }
+      response(400, 'bad request')(res);
+    } catch(err) {
+
+      response(400, 'bad request')(res);
     }
-    response(400, 'bad request')(res);
   })
+
+
   .put('/api/reminder', function(req, res) {
     const reminder = reminderPool[req.body.id];
     if (reminder) {
@@ -31,8 +42,9 @@ module.exports = function(router) {
     response(404, 'not found')(res);
   })
   .get('/api/reminder', function(req, res) {
+    console.log(req.url.query.id);
     const reminder = reminderPool[req.url.query.id];
-    if(reminder) {
+    if (reminder) {
       return response(200, reminder)(res);
     }
     response(404, 'not found')(res);
