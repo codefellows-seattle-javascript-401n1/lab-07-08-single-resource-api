@@ -30,5 +30,10 @@ Storage.prototype.fetchItem = function(schema, id){
 };
 
 Storage.prototype.deleteItem = function(schema, id){
-  fs.unlinkSync(`${this.dataDir}/${schema}/${id}`);
+  return new Promise((resolve, reject) => {
+    fs.unlink(`${this.dataDir}/${schema}/${id}`, function(err) {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
 };

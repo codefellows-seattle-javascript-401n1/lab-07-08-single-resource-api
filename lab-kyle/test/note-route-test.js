@@ -1,8 +1,8 @@
 'use strict';
 
 const request = require('superagent');
+const fs = require('fs');
 const expect = require('chai').expect;
-
 const server = require('../server');
 const port = process.env.PORT || 3000;
 const serverUrl = `http://localhost:${port}`;
@@ -139,9 +139,13 @@ describe('testing note-route module', function(){
 // delete test
   describe('testing method DELETE on endpoint /api/note', function(){
     before((done)=>{
+      fs.writeFile('/Users/Semtex/Desktop/codefellows/lab-07-08-single-resource-api/lab-kyle/routes/data/notes/23456', '{\"id\": \"23456\"}', (err) => {
+        if (err) throw err;
+        console.log('It\'s saved!');
+      });
       console.log('serverUrl', serverUrl);
-      const url = `${serverUrl}/api/note`;
-      request.del(url + '123456.copy')
+      request.del(`${serverUrl}/api/note`)
+        .send({id: '23456'})
         .end((err, res) => {
           this.res = res;
           this.note = res.body;
@@ -153,8 +157,8 @@ describe('testing note-route module', function(){
       expect(this.res.status).to.equal(200);
     });
 
-    it('should return a note', ()=>{
-      expect(this.res.text).to.equal('\"post deleted\"');
+    it('should return a message of \"note deleted\"', ()=>{
+      expect(this.res.text).to.equal('\"note deleted\"');
     });
   });
 });

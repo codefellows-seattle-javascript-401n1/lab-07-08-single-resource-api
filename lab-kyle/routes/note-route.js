@@ -39,10 +39,12 @@ module.exports = function(router){
     if (req.body){
       var note = req.body.id;
       console.log(note);
-      storage.deleteItem('notes', note);
-      return response(200, 'note deleted')(res);
-    } else {
-      response(404, 'not found')(res);
+      storage.deleteItem('notes', note).then(function(){
+        return response(200, 'note deleted')(res);
+      }).catch(function(err){
+        console.error(err);
+        response(404, 'not found')(res);
+      });
     }
   });
 };
