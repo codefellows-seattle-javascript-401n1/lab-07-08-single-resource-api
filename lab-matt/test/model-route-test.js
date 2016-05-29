@@ -48,6 +48,13 @@ describe('Testing the model-route module', function(){
     it('should return a model', () =>{
       expect(this.model.name).to.equal('Captain Underpants');
     });
+    it('should return status 404 for bad route', (done) => {
+      request.get(`${serverUrl}/api/dqwjdnqwoi`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
   });
   describe(' 2 testing method POST for bad request on endpoint /api/model', function(){
     before((done)=>{
@@ -115,10 +122,12 @@ describe('Testing the model-route module', function(){
   });
   describe(' 7 testing DELETE request on endpoint api/model DELETE', function(){
     before((done) => {
-      request.post(`${serverUrl}/api/model/create`).end((err, res) => {
+      request.post(`${serverUrl}/api/model/create`)
+      .send({name: 'Captain Underpants'})
+      .end((err, res) => {
         this.res = res;
         this.model = res.body;
-        request.delete(`${serverUrl}/api/model/delete`).send({id: res.body.id}).end((err, res) => {
+        request.del(`${serverUrl}/api/model/delete`).send({id: res.body.id}).end((err, res) => {
           this.res = res;
           this.model = res.body;
           done();

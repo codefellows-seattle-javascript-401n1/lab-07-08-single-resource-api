@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(statusCode, data){
+module.exports = function(statusCode, data ){
   return function(res){
     res.writeHead(statusCode, {
       'Content-Type': 'application/json'

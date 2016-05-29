@@ -8,16 +8,17 @@ const Storage = module.exports = function(dataDir){
 
 Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) =>{
-    fs.writeFile(`${this.dataDir}/${schema}/${item.id}`, JSON.stringify(item), function(err){
+    const filename = `${this.dataDir}/${schema}/${item.id}`;
+    fs.writeFile(filename , JSON.stringify(item), function(err){
       if(err) return reject(err);
       resolve(item);
     });
   });
 };
 
-Storage.prototype.fetchItem = function(schema, item){
+Storage.prototype.fetchItem = function(schema, id){
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${item.id}`, function(err, item){
+    fs.readFile(`${this.dataDir}/${schema}/${id}`, function(err, item){
       if(err) return reject(err);
       try {
         item = JSON.parse(item);
@@ -25,6 +26,15 @@ Storage.prototype.fetchItem = function(schema, item){
       } catch(err){
         reject(err);
       }
+    });
+  });
+};
+
+Storage.prototype.deleteItem = function(schema, id){
+  return new Promise((resolve, reject) => {
+    fs.unlink(`${this.dataDir}/${schema}/${id}`, function(err){
+      if(err) return reject(err);
+      resolve();
     });
   });
 };

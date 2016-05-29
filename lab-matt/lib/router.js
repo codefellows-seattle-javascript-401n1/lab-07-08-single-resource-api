@@ -53,6 +53,6 @@ function fourOhFour(res){
   res.writeHead(404, {
     'Content-Type': 'application/json'
   });
-  res.write(JSON.stringify('not found'));
+  res.write(JSON.stringify('Not Found'));
   res.end();
 }
