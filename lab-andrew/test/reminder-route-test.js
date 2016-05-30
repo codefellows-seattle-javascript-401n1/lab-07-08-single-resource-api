@@ -63,20 +63,31 @@ describe('Testing reminder route module', function() {
         done();
       });
     });
-    it('2should return a status 400', () => {
+    it('2 should return a status 400', () => {
       expect(this.res.status).to.equal(400);
     });
   });
-//
-//
-//
+
+  describe('3 testing for bad route', function() {
+    it('3 should return status 404', function(done) {
+      request.get(`${serverUrl}/bad route`)
+      .end((req, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+    });
+
+  });
+
+
+
   describe('4 testing GET id method on endpoint /api/reminder', function() {
     before((done) => {
       request.post(`${serverUrl}/api/reminder`)
       .send({content: 'trolls'})
       .end((err, res) => {
         this.res = res;
-        request.get(`${serverUrl}/api/reminder/?id=${this.reminder.id}`)
+        request.get(`${serverUrl}/api/reminder?id=${res.body.id}`)
         .end((err, res) => {
           this.res = res;
           expect(res.status).to.equal(200);
@@ -85,67 +96,51 @@ describe('Testing reminder route module', function() {
       });
     });
     it('4 should return a status 200', (done) => {
-      console.log('ID: ', this.reminder.id);
+      console.log('ID: ', this.reminder);
       done();
     });
   });
 //
 //
 //
-//   describe('5 testing GET res for not found ID on endpoint /api/reminder', function() {
-//     before((done) => {
-//       request.get(`${serverUrl}/api/reminder`)
-//       .end((err, res) => {
-//         this.res = res;
-//         expect(this.res.status).to.equal(404);
-//         done();
-//       });
-//     });
-//   });
-//   it('should return a status 404 not found', () => {
-//     expect(this.res.status).to.equal(400);
-//   });
-//
-//   describe('6 testing POST method and completion on endpoint /api/reminder', function() {
-//     before((done) => {
-//       request.post(`${serverUrl}/api`)
-//       .send({content: 'troll wat'})
-//       .end((err, res) => {
-//         this.res = res;
-//         this.reminder.id = res.body.id;
-//         done();
-//       });
-//     });
-//     it('return a status 200 on creation of new reminder', (done) => {
-//       newStorage.setItem('notes', {content: 'troll wat', remindMe: 'tomorrow'})
-//         .then(function(reminder) {
-//           expect(reminder.content).to.equal('troll wat');
-//           expect(reminder.remindMe).to.equal('tomorrow');
-//           done();
-//         }).catch(function(err) {
-//           console.error(err);
-//           expect(err).to.equal(undefined);
-//           done();
-//         });
-//     });
-//   });
-//
-//   describe(' testing DELETE method on endpoint /api/reminder', function() {
-//     before((done) => {
-//       request.post(`${serverUrl}/api/reminder`).end((err, res) => {
-//         this.res = res;
-//         this.reminder.id = res.body.id;
-//         request.delete(`${serverUrl}/api/reminder/delete`).send({id:res.body.id})
-//         .end((err, res) => {
-//           this.res = res;
-//           this.model = res.body;
-//           done();
-//         });
-//       });
-//     });
-//   });
-//   it('7 should return status 200 of completed deletion', () => {
-//     expect(this.res.status).to.equal(200);
-//   });
-//
+  describe('5 testing GET res for not found ID on endpoint /api/reminder', function() {
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`)
+      .send({content: 'trolls'})
+      .end((err, res) => {
+        this.res = res;
+        request.get(`${serverUrl}/api/reminder?id=12345`)
+        .end((err, res) => {
+          this.res = res;
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+    it('5 should return a status 404', (done) => {
+      console.log('ID: ', this.reminder);
+      done();
+    });
+  });
+
+  describe('6 testing GET method on endpoint /api/reminder', function() {
+
+    before((done) => {
+      request.post(`${serverUrl}/api/reminder`)
+      .send({content: 'trolls'})
+      .end((err, res) => {
+        this.res = res;
+        request.get(`${serverUrl}/api/reminder`)
+        .end((err, res) => {
+          this.res = res;
+          expect(res.status).to.equal(400);
+          done();
+        });
+      });
+    });
+    it('6 should return a status 400', (done) => {
+      console.log('ID: ', this.reminder);
+      done();
+    });
+  });
 });

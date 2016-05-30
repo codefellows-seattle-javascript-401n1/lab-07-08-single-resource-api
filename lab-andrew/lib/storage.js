@@ -17,7 +17,7 @@ Storage.prototype.setItem = function(schema, item){
 
 Storage.prototype.fetchItem = function(schema, id) {
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}${id}`,function(err, item) {
+    fs.readFile(`${this.dataDir}/${schema}/${id}`,function(err, item) {
       if(err) return reject(err);
       try {
         item = JSON.parse(item);

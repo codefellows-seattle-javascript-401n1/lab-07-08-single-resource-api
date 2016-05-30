@@ -3,7 +3,7 @@
 const Reminder = require('../model/reminder');
 const response = require('../lib/response');
 const Storage = require('../lib/storage');
-const reminderStorage = new Storage(`${__dirname}/../data/`);
+const reminderStorage = new Storage(`${__dirname}/../data`);
 const del = require('del');
 
 const reminderPool = {};
@@ -13,7 +13,7 @@ module.exports = function(router) {
     try {
       if (req.body.content){
         const reminder = new Reminder(req.body.content);
-        reminderPool[reminder.body] = reminder;
+        // reminderPool[reminder.id] = reminder;
         reminderStorage.setItem('notes', reminder)
       .then(function() {
         return response(200, reminder)(res);
@@ -42,12 +42,18 @@ module.exports = function(router) {
     response(404, 'not found')(res);
   })
   .get('/api/reminder', function(req, res) {
-    console.log(req.url.query.id);
-    const reminder = reminderPool[req.url.query.id];
-    if (reminder) {
-      return response(200, reminder)(res);
+    if(!req.url.query.id) {
+      return response(400, 'bad request')(res);
     }
-    response(404, 'not found')(res);
+    console.log('req.url.query', req.url.query.id);
+    reminderStorage.fetchItem('notes', req.url.query.id)
+    .then((reminder) => {
+      return response(200, reminder)(res);
+    })
+    .catch((err) => {
+      response(404, err)(res);
+      return;
+    });
   })
 .delete('/api/reminder', function(req, res) {
   if (`${__dirname}/../data/notes/${req.body.id}`) {
