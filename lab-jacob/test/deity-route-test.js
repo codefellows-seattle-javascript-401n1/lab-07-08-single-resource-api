@@ -7,6 +7,8 @@ const server = require('../server');
 const PORT = process.env.PORT || 3000;
 const serverUrl = `localhost:${PORT}`;
 
+var testId; //global variable for storing posted UUID
+
 describe('testing the deity-note route', function(){
   before(function(done){ // runs this block before every it block, starts server
     if(!server.isRunning){
@@ -28,8 +30,6 @@ describe('testing the deity-note route', function(){
     }
     done();
   });
-
-  var testId; //global variable for storing posted UUID
 
   describe('testing post method on endpoint /api/deity', function(){ // beginning of tests for the post methods
     before((done) => {
@@ -130,10 +130,8 @@ describe('testing the deity-note route', function(){
   describe('testing delete method on endpoint /api/deity', function(){ // test for the delete method
     before((done) => {
       request.del(`${serverUrl}/api/deity`)
-        .query({id: testId})
+        .send({id: testId})
         .end((err, res) => {
-          //console.log('heres testing error');  long error message for debugging delete
-          //if (err) console.log(err);
           this.res = res;
           this.deity = res.body;
           done();
@@ -144,7 +142,7 @@ describe('testing the deity-note route', function(){
       expect(this.res.status).to.equal(200);
     });
     it('should delete the deity object', () => {
-      expect(this.deity).to.equal();
+      expect(this.deity).to.equal(null);
     });
   });
 });
