@@ -32,7 +32,7 @@ Storage.prototype.fetchDeity = function(schema, id){ // fetches item from specif
 Storage.prototype.deleteDeity = function(schema, deity){ // deletes deity from data storage
   return new Promise((resolve, reject) => {
     fs.unlink(`${this.dataDir}/${schema}/${deity.id}`, function(err){
-      if (err) return (err);
+      if (err) return reject(err);
       try{
         resolve(err);
       } catch (err) {
