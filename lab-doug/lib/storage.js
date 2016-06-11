@@ -20,11 +20,11 @@ Storage.prototype.fetchItem = function(schema, uuid){
     fs.readFile(`${this.dataDir}/${schema}/${uuid}.json`, function(err, data){
       if(err) return reject(data);
       try{
-        var parsedItem= JSON.parse(data);
+        var parsedItem = JSON.parse(data);
         console.log('fetched "data" item after JSONparse in storage.js:', parsedItem);
         return resolve(parsedItem);
       } catch (err){
-        return resolve(err);
+        return reject(err);
       }
     });
   });

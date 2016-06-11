@@ -38,18 +38,19 @@ Router.prototype.route = function(){
   const routes = this.routes;//I do not understand why we need this
   return function(req, res){
     Promise.all([
-      parseBody(req),
-      parseUrl(req)
+      parseBody(req),//gives you req.body object
+      parseUrl(req)//gives you req.url and req.url.query
     ]).then(function(){
       console.log('req pathname in router.js then method: ', req.url.pathname);
       if(typeof routes[req.method][req.url.pathname] === 'function'){
+        console.log('route may be valid in router.js route()');
         //this line just completes running this function
         return routes[req.method][req.url.pathname](req, res);
       }
       return response(404, 'not found')(res);
     }).catch(function(err){
       console.log('catch called with error in router.jsL  ', err);
-      return response(400, 'bad request in router.js')(res);
+      return response(400, 'bad request')(res);
     });
   };
 };

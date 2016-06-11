@@ -36,14 +36,15 @@ module.exports = function(router){
       response(404, 'not found')(res);
     }
   }).get('/api/matchscore', function(req, res){
-    matchScoreStorage.fetchItem('matchscore', req.url.query.uuid)
+    console.log('req.url.query: ', req.url.query);
+    if(!req.url.query.id) return response(400, 'bad request')(res);
+    matchScoreStorage.fetchItem('matchscore', req.url.query.id)
     .then(function(item){
+      console.log('value of item in get route in matchsocre-route: ', item);
       return response(200, item)(res);
     }).catch(function(){
-      return response(400, 'bad request in matchscore-route.js')(res);
+      return response(404, 'not found')(res);
     });
-
-    //response(404, 'not found in matchscore-route.js')(res);
   })
   .delete('/api/matchscore', function(req, res){
     matchScoreStorage.deleteItem('matchscore', req.body.uuid)
