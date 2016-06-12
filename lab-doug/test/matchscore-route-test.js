@@ -90,7 +90,7 @@ describe('testing matchscore-route module ', function(){
     it('should return a response code of 400', () => {
       expect(this.getRes.status).to.equal(400);
     });
-    it('should provide json string res of "not bad request"', () => {
+    it('should provide json string res of "bad request"', () => {
       expect(this.getResBody).to.equal('bad request');
     });
   });

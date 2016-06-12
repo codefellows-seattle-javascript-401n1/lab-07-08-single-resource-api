@@ -1,11 +1,9 @@
 'use strict';
 
-//const MatchScore = require('../model/matchscore');
 const response = require('../lib/response');
 const Storage = require('../lib/Storage');
 const uuid = require('node-uuid');
 var matchScoreStorage = new Storage(__dirname + '/../test/data');
-//var matchScorePool = {};
 
 module.exports = function(router){
   router.post('/api/matchscore', function(req, res){
@@ -36,11 +34,9 @@ module.exports = function(router){
       response(404, 'not found')(res);
     }
   }).get('/api/matchscore', function(req, res){
-    console.log('req.url.query: ', req.url.query);
     if(!req.url.query.id) return response(400, 'bad request')(res);
     matchScoreStorage.fetchItem('matchscore', req.url.query.id)
     .then(function(item){
-      console.log('value of item in get route in matchsocre-route: ', item);
       return response(200, item)(res);
     }).catch(function(){
       return response(404, 'not found')(res);
@@ -53,6 +49,5 @@ module.exports = function(router){
     }).catch(function(){
       return response(400,'bad request' )(res);
     });
-    //response(404, 'not found in matchscore-route.js')(res);
   });
 };

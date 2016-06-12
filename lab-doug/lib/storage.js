@@ -6,6 +6,7 @@ const Storage = module.exports = function(dataDir){
 
 Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) => {
+    console.log('EXAMPLE OF ITEM IN SET ITEM:', item);
     var stringItem = JSON.stringify(item);
     fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, stringItem, function(err){
       if(err){
@@ -21,7 +22,6 @@ Storage.prototype.fetchItem = function(schema, uuid){
       if(err) return reject(data);
       try{
         var parsedItem = JSON.parse(data);
-        console.log('fetched "data" item after JSONparse in storage.js:', parsedItem);
         return resolve(parsedItem);
       } catch (err){
         return reject(err);
@@ -32,9 +32,9 @@ Storage.prototype.fetchItem = function(schema, uuid){
 
 Storage.prototype.deleteItem = function(schema, uuid){
   return new Promise((resolve, reject) => {
-    fs.unlink(`${this.dataDir}/${schema}/${uuid}.json`, function(err, item){
+    fs.unlink(`${this.dataDir}/${schema}/${uuid}.json`, function(err, res){
       if(err) return reject(err);
-      resolve(uuid);
+      resolve(res);
     });
   });
 };
