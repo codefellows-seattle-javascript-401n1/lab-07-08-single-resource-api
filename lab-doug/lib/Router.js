@@ -38,8 +38,8 @@ Router.prototype.route = function(){
   const routes = this.routes;//I do not understand why we need this
   return function(req, res){
     Promise.all([
-      parseBody(req),
-      parseUrl(req)
+      parseBody(req),//gives you req.body object
+      parseUrl(req)//gives you req.url and req.url.query
     ]).then(function(){
       if(typeof routes[req.method][req.url.pathname] === 'function'){
         //this line just completes running this function
@@ -47,7 +47,6 @@ Router.prototype.route = function(){
       }
       return response(404, 'not found')(res);
     }).catch(function(err){
-      console.log('catch called with error: ', err);  
       return response(400, 'bad request')(res);
     });
   };

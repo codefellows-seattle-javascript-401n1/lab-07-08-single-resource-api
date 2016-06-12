@@ -6,25 +6,25 @@ const Storage = module.exports = function(dataDir){
 
 Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) => {
-    // item = JSON.stringify(item);
-    console.log('setItem result: ', item);
-    fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, JSON.stringify(item), function(err){
-      if(err) return reject(err);
-      resolve(item);
+    console.log('EXAMPLE OF ITEM IN SET ITEM:', item);
+    var stringItem = JSON.stringify(item);
+    fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, stringItem, function(err){
+      if(err){
+        return reject(err);
+      }
+      return resolve(JSON.parse(stringItem));
     });
   });
 };
-
 Storage.prototype.fetchItem = function(schema, uuid){
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${uuid}.json`, function(err, item){
-      if(err) return reject(err);
+    fs.readFile(`${this.dataDir}/${schema}/${uuid}.json`, function(err, data){
+      if(err) return reject(data);
       try{
-        item = JSON.parse(item);
-        console.log('fetched item after parse:', item);
-        resolve(item);
+        var parsedItem = JSON.parse(data);
+        return resolve(parsedItem);
       } catch (err){
-        resolve(err);
+        return reject(err);
       }
     });
   });
@@ -32,9 +32,9 @@ Storage.prototype.fetchItem = function(schema, uuid){
 
 Storage.prototype.deleteItem = function(schema, uuid){
   return new Promise((resolve, reject) => {
-    fs.unlink(`${this.dataDir}/${schema}/${uuid}.json`, function(err, item){
+    fs.unlink(`${this.dataDir}/${schema}/${uuid}.json`, function(err, res){
       if(err) return reject(err);
-      resolve();
+      resolve(res);
     });
   });
 };
