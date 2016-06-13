@@ -7,8 +7,8 @@ const server = require('../server');
 const port = process.env.PORT || 3000;
 const serverUrl = `http://localhost:${port}`;
 
-// const Server = require('../lib/storage');
-// const newStorage = new Server(`${__dirname}/../data/notes`);
+
+
 
 
 describe('Testing reminder route module', function() {
@@ -35,7 +35,6 @@ describe('Testing reminder route module', function() {
 
   describe(' testing POST method on endpoint /api/reminder', function() {
     before((done) => {
-      console.log('serverUrl', serverUrl);
       request.post(`${serverUrl}/api/reminder`)
       .send({content: 'Troll talk', remindMe: 'tomorrow'})
       .end((err, res) => {
@@ -68,41 +67,24 @@ describe('Testing reminder route module', function() {
     });
   });
 
-  describe('3 testing for bad route', function() {
-    it('3 should return status 404', function(done) {
-      request.get(`${serverUrl}/bad route`)
-      .end((req, res) => {
-        expect(res.status).to.equal(404);
-        done();
-      });
-    });
-
-  });
-
-
 
   describe('4 testing GET id method on endpoint /api/reminder', function() {
     before((done) => {
       request.post(`${serverUrl}/api/reminder`)
-      .send({content: 'trolls'})
+      .send({content: 'trolls', remindMe: 'tomorrow'})
       .end((err, res) => {
-        this.res = res;
         request.get(`${serverUrl}/api/reminder?id=${res.body.id}`)
         .end((err, res) => {
           this.res = res;
-          expect(res.status).to.equal(200);
           done();
         });
       });
     });
     it('4 should return a status 200', (done) => {
-      console.log('ID: ', this.reminder);
+      expect(this.res.status).to.equal(200);
       done();
     });
   });
-//
-//
-//
   describe('5 testing GET res for not found ID on endpoint /api/reminder', function() {
     before((done) => {
       request.post(`${serverUrl}/api/reminder`)
