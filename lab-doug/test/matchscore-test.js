@@ -68,15 +68,18 @@ describe('testing matchscore module ', function(){
   describe('Testing  GET success on endpoint /api/matchscore', function(){
     before((done) => {
       request.post(`${serverUrl}/api/matchscore`)
-      .send({distance: 600, score: 588, xCount: 15 })
+      .send({distance: 600, score: 588, xCount: 22})
       .end((err, res) => {
         this.res = res;
         this.matchScore = res.body;
+        console.log('res.body in test: ', res.body);
         request.get(`${serverUrl}/api/matchscore`)
         .query(`id=${this.matchScore.uuid}`)
           .end((err, res) => {
             this.getRes = res;
+            console.log('res in end: ', this.getRes);
             this.getResBody = res.body;
+            console.log('res.body in end: ', this.getResBody);
             done();
           });
       });
