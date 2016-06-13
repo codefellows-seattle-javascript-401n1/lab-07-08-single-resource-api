@@ -8,7 +8,7 @@ Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) => {
     console.log('EXAMPLE OF ITEM IN SET ITEM:', item);
     var stringItem = JSON.stringify(item);
-    fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, stringItem, function(err){
+    fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, item, function(err){
       if(err){
         return reject(err);
       }
@@ -18,10 +18,15 @@ Storage.prototype.setItem = function(schema, item){
 };
 Storage.prototype.fetchItem = function(schema, uuid){
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${uuid}.json`, function(err, data){
+    var filePath = `${this.dataDir}/${schema}/${uuid}.json`;
+    console.log('path: ' , filePath);
+    fs.readFile(filePath, 'utf8', function(err, data){
+      console.log('data: ', data);
+      console.log('err: ', err);
       if(err) return reject(data);
       try{
         var parsedItem = JSON.parse(data);
+        console.log('PARSDEITEM: ', parsedItem);
         return resolve(parsedItem);
       } catch (err){
         return reject(err);

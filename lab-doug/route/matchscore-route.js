@@ -3,7 +3,7 @@
 const response = require('../lib/response');
 const Storage = require('../lib/Storage');
 const uuid = require('node-uuid');
-var matchScoreStorage = new Storage(__dirname + '/../test/data');
+var matchScoreStorage = new Storage(__dirname + '/../data');
 
 module.exports = function(router){
   router.post('/api/matchscore', function(req, res){
@@ -35,6 +35,7 @@ module.exports = function(router){
     }
   }).get('/api/matchscore', function(req, res){
     if(!req.url.query.id) return response(400, 'bad request')(res);
+    console.log('get id: ', req.url.query.id);
     matchScoreStorage.fetchItem('matchscore', req.url.query.id)
     .then(function(item){
       return response(200, item)(res);

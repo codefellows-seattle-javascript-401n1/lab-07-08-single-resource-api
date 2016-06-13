@@ -8,14 +8,14 @@ describe('Testing the Storage module,', function(){
   describe('Testing the setItem method,', function(){
     it('should match file name equal to uuid.json', function(done){
       var item = {uuid:'123456', distance: 500, score: 576, xCount: 25};
-      var stringItem = JSON.parse(item);
-      console.log('FILE NAME IN STORAGE TEST: ', stringItem);
-      testStorage.setItem('matchscore',stringItem )
+      //var stringItem = JSON.parse(item);
+      console.log('OBJECT IN STORAGE TEST: ', item);
+      testStorage.setItem('matchscore',item )
       .then (() => {
         fs.readdir(`${__dirname}/data`, function(err, files){
-        console.log('FILES ARRAY: ', files);
-        done();
-      })
+          console.log('FILES ARRAY: ', files);
+          done();
+        })
       .then(function(files){
         expect(files.name).to.equal('123456.json');
         done();
@@ -24,14 +24,14 @@ describe('Testing the Storage module,', function(){
         expect(err).to.equal(undefined);
         done();
       });
+      });
     });
   });
-});
   describe('Testing the fetchItem method,', function(){
     it('should return the existing item and verify correct uuid and correct score values: ', function(done){
-      testStorage.fetchItem('matchscore', 123456).
+      testStorage.fetchItem('matchscore', '123456').
       then(function(item){
-        expect(item.uuid).to.equal(123456);
+        expect(item.uuid).to.equal('123456');
         expect(item.score).to.equal(576);
         done();
       }).catch(function(err){
@@ -42,10 +42,16 @@ describe('Testing the Storage module,', function(){
     });
   });
   describe('Testing the deleteItem method,', function(){
-    it('should return a response verifying deletion: ', function(done){
+    it('should return verify that the file does not exist: ', function(done){
       testStorage.deleteItem('matchscore', 123456)
-      .then(function(uuid){
-        expect(pp).to.equal(200);
+      .then (() => {
+        fs.readdir(`${__dirname}/data`, function(err, files){
+          console.log('FILES ARRAY: ', files);
+          done();
+        });
+      })
+      .then(function(files){
+        expect(files.name).to.not.equal('123456.json');
         done();
       }).catch(function(err){
         console.error(err);
@@ -54,5 +60,4 @@ describe('Testing the Storage module,', function(){
       });
     });
   });
-
 });
