@@ -20,7 +20,7 @@ const Router = module.exports = function(){
 };
 
 
-//router is an object constructor that register a single property called routes. That property has an pbject literal with empty objects - GET, POST, PUT, and DELETE//
+//router is an object constructor that register a single property called routes. That property has an object literal with empty objects - GET, POST, PUT, and DELETE//
 Router.prototype.get = function(endpoint, callback){
   this.routes.GET['/api/note'] = callback;
   return this;
