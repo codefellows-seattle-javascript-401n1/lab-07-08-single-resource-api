@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/FazioD/lab-07-08-single-resource-api#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^2.10.2",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
