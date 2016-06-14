@@ -52,7 +52,7 @@ describe('testing matchscore module ', function(){
         this.res = res;
         this.matchScore = res.body;
         //letting the before block know that it is complete.
-        //the program now goes on to execute it blocks
+        //the program now goes on to execute the 'it' blocks
         done();
       });
     });
@@ -60,7 +60,7 @@ describe('testing matchscore module ', function(){
     it('should set statusCode 400: ', () => {
       expect(this.res.status).to.equal(400);
     });
-    it('should map JSON for matchScore object', () => {
+    it('should return bad request response', () => {
       expect(this.matchScore).to.equal('bad request');
     });
   });
@@ -72,14 +72,12 @@ describe('testing matchscore module ', function(){
       .end((err, res) => {
         this.res = res;
         this.matchScore = res.body;
-        console.log('res.body in test: ', res.body);
+        console.log('this.matchscore: ', this.matchScore);
         request.get(`${serverUrl}/api/matchscore`)
         .query(`id=${this.matchScore.uuid}`)
           .end((err, res) => {
             this.getRes = res;
-            console.log('res in end: ', this.getRes);
             this.getResBody = res.body;
-            console.log('res.body in end: ', this.getResBody);
             done();
           });
       });

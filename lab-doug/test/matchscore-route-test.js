@@ -26,7 +26,6 @@ describe('testing matchscore-route module ', function(){
     }
     done();
   });
-  //write a test to ensure that your api returns a status code of 404 for routes that have not been registered
 
   describe('Testing  POST route failure on endpoint /api/matchscore', function(){
     before((done) => {
@@ -47,8 +46,7 @@ describe('testing matchscore-route module ', function(){
     });
   });
 
-
-  describe('Testing  failed GET method on endpoint /api/matchscore: ', function(){
+  describe('Testing  failed GET method on endpoint /api/matchscore invalid uuid: ', function(){
     before((done) => {
       request.post(`${serverUrl}/api/matchscore`)
       .send({distance: 600, score: 588, xCount: 15 })
@@ -71,7 +69,8 @@ describe('testing matchscore-route module ', function(){
       expect(this.getResBody).to.equal('not found');
     });
   });
-  describe('Testing  failed GET method on endpoint /api/matchscore: ', function(){
+
+  describe('Testing  failed GET method on endpoint /api/matchscore with no uuid: ', function(){
     before((done) => {
       request.post(`${serverUrl}/api/matchscore`)
       .send({distance: 600, score: 588, xCount: 15 })
@@ -79,7 +78,7 @@ describe('testing matchscore-route module ', function(){
         this.res = res;
         this.matchScore = res.body;
         request.get(`${serverUrl}/api/matchscore`)
-        .query('id=')//no id
+        .query('')//no id
           .end((err, res) => {
             this.getRes = res;
             this.getResBody = res.body;
@@ -94,7 +93,4 @@ describe('testing matchscore-route module ', function(){
       expect(this.getResBody).to.equal('bad request');
     });
   });
-
-
-
 });

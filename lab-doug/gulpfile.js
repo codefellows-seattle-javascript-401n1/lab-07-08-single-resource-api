@@ -4,7 +4,6 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
 const mocha = require('gulp-mocha');
-const nyan = require('karma-nyan-reporter');
 const paths = ['*.js', 'lib/*.js', 'model/*.js', 'test/*.js', 'route/*.js'];
 
 gulp.task('eslint', function(){
@@ -22,8 +21,8 @@ gulp.task('nodemon', function(){
 });
 
 gulp.task('test', () => {
-  return gulp.src(['./test/matchscore-test.js', './test/matchscore-route-test.js'], {read: false})
-  .pipe(mocha({reporter: 'nyan'}));
+  return gulp.src(['./test/matchscore-test.js', './test/matchscore-route-test.js', './test/storage-test.js'], {read: false})
+  .pipe(mocha({reporter: 'list'}));
 });
 
 
