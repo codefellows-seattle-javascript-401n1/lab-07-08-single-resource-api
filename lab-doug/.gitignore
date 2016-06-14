@@ -1,7 +1,8 @@
 
 # Created by https://www.gitignore.io/api/osx,linux,node
 #ignore files added to db
-/db/matchscore/*
+data
+test/data/**
 
 ### OSX ###
 *.DS_Store

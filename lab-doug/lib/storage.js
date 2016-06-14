@@ -6,7 +6,6 @@ const Storage = module.exports = function(dataDir){
 
 Storage.prototype.setItem = function(schema, item){
   return new Promise((resolve, reject) => {
-    console.log('EXAMPLE OF ITEM IN SET ITEM:', item);
     var stringItem = JSON.stringify(item);
     fs.writeFile(`${this.dataDir}/${schema}/${item.uuid}.json`, stringItem, function(err){
       if(err){
