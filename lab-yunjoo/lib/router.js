@@ -19,6 +19,7 @@ Router.prototype.get = function(endpoint, callback){
 
 Router.prototype.put = function(endpoint, callback){
   this.routes.PUT[endpoint] = callback;
+  return this;
 };
 
 Router.prototype.post = function(endpoint, callback){
