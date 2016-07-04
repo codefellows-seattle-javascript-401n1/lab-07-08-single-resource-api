@@ -4,26 +4,16 @@
 const http = require('http');
 const Router = require('./lib/router');
 const router = new Router();
-
+const noteRoute = require('./route/note-route');
 //created const var port that is being assigned the env variable//
 const port = process.env.PORT || 3000;
 
+noteRoute(router);
 
-//Removed because routes are being written in router
-// router.get('/api/note', function(req, res){
-//   res.writeHead(200);
-//   res.write('yaaaaaaa our router works!');
-//   res.end();
-//
-// });
-//
-
-
-
-//created a server using http module. tkakes a call. http.createServer is looking
+//created a server using http module. takes a call. http.createServer is looking
 //for any function that takes in a req, res as its argument//
-const server = http.createServer(router.route());
+const server = module.exports = http.createServer(router.route());
 
 server.listen(port, function (){
-  console.log('server is up: :::', port );
+  server.isRunning = true;
 });

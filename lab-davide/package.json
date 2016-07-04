@@ -29,5 +29,8 @@
     "mocha": "^2.4.5",
     "nodemon": "^1.9.2",
     "superagent": "^2.0.0-alpha.3"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.7"
   }
 }

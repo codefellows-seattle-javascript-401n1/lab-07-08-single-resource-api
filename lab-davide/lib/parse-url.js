@@ -1,13 +1,14 @@
 'use strict';
 
+//assigning const url to a built in required node module//
 const url = require('url');
 const queryString = require('querystring');
 
-//A reject is not needed with this promise will never fail//
+//reject is not needed with this promise will never fail//
 module.exports = function(req){
   return new Promise(function(resolve){
     req.url = url.parse(req.url);
-    url.query = queryString.parse(req.url.query);
+    req.url.query = queryString.parse(req.url.query);
     resolve();
   });
 

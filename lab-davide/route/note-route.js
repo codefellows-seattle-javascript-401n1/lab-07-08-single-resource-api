@@ -3,51 +3,46 @@
 const Note = require('../model/note');
 const response = require('../lib/response');
 const Storage = require('../lib/storage');
+const debug = require('debug')('note:note-route-route');
 
-//TODO: change this to dataDir and update storage//
-var storage = new Storage(`${__dirname}/../data`);
+var noteStorage = new Storage(`${__dirname}/../data`);
 
-//POST 200 & 400//
-module.exports = function(router){
-  router
-  .post('/api/note', function(req, res){
-    var note = new Note(req.body.content);
-    if(!req.body.content){
-      return response(400, 'bad request');
+var notePool = {};
+
+module.exports = function(router) {
+
+  router.post('/api/note', function(req, res) {
+    debug('hitting /api/note post in note-route-route');
+
+    if(!req.body) {
+      return response(400, 'bad request')(res);
     }
-    storage.setItem('notes', note).then(function(){
-      return response(200, note)(res);
+    if(!req.body.content) {
+      return response(400, 'bad request')(res);
+    }
+
+    const note = new Note(req.body.content);
+    notePool[note.id] = note;
+    noteStorage.setItem('notes', note).then(function(item){
+      return response(200, item)(res);
     }).catch(function(err){
+      //needed this here to work//
       console.log(err);
       return response(400, 'bad request')(res);
     });
   })
 
+  .get('/api/note', function(req, res) {
+    const noteId = req.url.query.id;
 
-//GET 200 & 404//
-  .get('/api/note', function(req, res){
-    var note = req.url.query.id;
-    if (!req.url.id){
+    if (!req.url.query.id) {
       return response(400, 'bad request')(res);
     }
-    console.log('working');
-    storage.fetchItem('notes', note).then(function(){
-      return response(200, note)(res);
-    }).catch(function(err){
-      err;
-      return response(404, 'not found')(res);
-    });
-  })
 
-//DELETE 200, 400, & 404//
-  .delete('/api/note', function(req, res){
-    var note = req.body.id;
-    if (!req.body.id){
-      return response(400, 'bad request')(res);
-    }
-    storage.deleteItem('notes', note).then(function(){
-      return response(200, 'note is deleted')(res);
-    }).catch(function(err){
+    noteStorage.fetchItem('notes', noteId)
+    .then((item) => {
+      return response(200, item)(res);
+    }).catch(function(err) {
       err;
       return response(404, 'not found')(res);
     });

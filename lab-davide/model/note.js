@@ -2,8 +2,8 @@
 
 const uuid = require('node-uuid');
 
-module.exports = function Note(content){
-  this.id = uuid.v4();
+module.exports = function(content){
+  this.id = uuid.v1();
   this.content = content;
   this.timestamp =  new Date();
 };

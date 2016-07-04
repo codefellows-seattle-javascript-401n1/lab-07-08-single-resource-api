@@ -1,30 +1,40 @@
 'use strict';
 
 const fs = require('fs');
+const debug = require('debug')('note:storage');
 
-const Storage = module.exports = function(dataDir){
+//we are creating an object constructor and saving it to dataDir//
+const storage = module.exports = function(dataDir){
   this.dataDir = dataDir;
 };
 
-Storage.prototype.setItem = function(schema, item){
+storage.prototype.setItem = function(schema, note) {
+  debug('hitting setItem');
   return new Promise((resolve, reject) => {
-    fs.writeFile(`${this.dataDir}/${schema}/${item.id}`, JSON.stringify(item), function(err){
+    fs.writeFile(`${this.dataDir}/${schema}/${note.id}`, JSON.stringify(note), function(err) {
       if (err) return reject(err);
-      resolve(item);
+      resolve(note);
     });
   });
 };
 
-Storage.prototype.fetchItem = function(schema, id){
+storage.prototype.fetchItem = function(schema, id){
+  debug('hitting fetchItem');
   return new Promise((resolve, reject) => {
-    fs.readFile(`${this.dataDir}/${schema}/${id}`, function(err, item){
+    fs.readFile(`${this.dataDir}/${schema}/${id}`, function(err, note){
       if (err) return reject(err);
-      try {
-        item = JSON.parse(item);
-        resolve(item);
-      } catch(err){
-        reject(err);
-      }
+      note = JSON.parse(note);
+      resolve(note);
+    });
+  });
+};
+
+
+storage.prototype.deleteItem = function(schema, noteId){
+  return new Promise((resolve, reject) => {
+    fs.unlink(`${this.dataDir}/${schema}/${noteId}`, function(err){
+      if(err) return reject(err);
+      resolve();
     });
   });
 };

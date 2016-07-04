@@ -4,6 +4,7 @@
 //returning the parse method from the url module//
 const parseUrl = require('./parse-url');
 const parseBody = require('./parse-body');
+const response = require('./response');
 
 //return a constructor that is going to be a new object for our route.//
 //creating a router with a var to add things to this prototype //
@@ -51,19 +52,11 @@ Router.prototype.route = function(){
       if(typeof routes[req.method][req.url.pathname] === 'function') {
         return routes[req.method][req.url.pathname](req, res);
       }
-      fourOhFour('router-route', res);
-    }).catch(function(err,res){
-      console.log(err);
-      fourOhFour(err,res);
+      response(404, 'not found')(res);
+    }).catch(function(err){
+      //needed this here to work//
+      console.error('error', err);
+      response(400, 'bad request')(res);
     });
   };
 };
-
-function fourOhFour(err,res){
-  res.writeHead(404, {
-    'Content-Type': 'application/json'
-  });
-
-  res.write(JSON.stringify('not found' + err));
-  res.end();
-}
