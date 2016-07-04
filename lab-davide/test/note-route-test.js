@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('note:note-route-test');
+// const debug = require('debug')('note:note-route-test');
 
 //npm modules//
 const request = require('superagent');
@@ -38,7 +38,7 @@ describe('testing note-route module', function() {
   });
 
   describe('testing POST on /api/note', function() {
-    debug('hitting POST api/note 200');
+    // debug('hitting POST api/note 200');
     before((done) => {
       request.post(`${serverUrl}/api/note`)
       .send({content: 'test note' })
@@ -63,7 +63,7 @@ describe('testing note-route module', function() {
   });
 
   describe('testing GET on api/note', function () {
-    debug('hitting GET api/note 404');
+    // debug('hitting GET api/note 404');
     before((done) => {
       request.post(`${serverUrl}/api/note`)
       .send({content: 'test note'})
@@ -83,7 +83,7 @@ describe('testing note-route module', function() {
     });
 
     describe('testing GET on api/note', function () {
-      debug('hitting GET api/note 400');
+      // debug('hitting GET api/note 400');
       before((done) => {
         request.post(`${serverUrl}/api/note`)
         .send({content: 'test note'})
