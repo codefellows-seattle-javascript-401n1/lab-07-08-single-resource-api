@@ -1,0 +1,33 @@
+{
+  "name": "lab-davide",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FazioD/lab-07-08-single-resource-api.git"
+  },
+  "author": "faziod@uw.edu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FazioD/lab-07-08-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/FazioD/lab-07-08-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^2.10.2",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-nodemon": "^2.0.7",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.2",
+    "superagent": "^2.0.0-alpha.3"
+  }
+}
