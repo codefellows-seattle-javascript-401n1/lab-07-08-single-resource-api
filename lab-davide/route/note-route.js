@@ -3,7 +3,7 @@
 const Note = require('../model/note');
 const response = require('../lib/response');
 const Storage = require('../lib/storage');
-const debug = require('debug')('note:note-route-route');
+// const debug = require('debug')('note:note-route-route');
 
 var noteStorage = new Storage(`${__dirname}/../data`);
 
@@ -12,7 +12,7 @@ var notePool = {};
 module.exports = function(router) {
 
   router.post('/api/note', function(req, res) {
-    debug('hitting /api/note post in note-route-route');
+    // debug('hitting /api/note post in note-route-route');
 
     if(!req.body) {
       return response(400, 'bad request')(res);

@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const debug = require('debug')('note:storage');
+// const debug = require('debug')('note:storage');
 
 //we are creating an object constructor and saving it to dataDir//
 const storage = module.exports = function(dataDir){
@@ -9,7 +9,7 @@ const storage = module.exports = function(dataDir){
 };
 
 storage.prototype.setItem = function(schema, note) {
-  debug('hitting setItem');
+  // debug('hitting setItem');
   return new Promise((resolve, reject) => {
     fs.writeFile(`${this.dataDir}/${schema}/${note.id}`, JSON.stringify(note), function(err) {
       if (err) return reject(err);
@@ -19,7 +19,7 @@ storage.prototype.setItem = function(schema, note) {
 };
 
 storage.prototype.fetchItem = function(schema, id){
-  debug('hitting fetchItem');
+  // debug('hitting fetchItem');
   return new Promise((resolve, reject) => {
     fs.readFile(`${this.dataDir}/${schema}/${id}`, function(err, note){
       if (err) return reject(err);
