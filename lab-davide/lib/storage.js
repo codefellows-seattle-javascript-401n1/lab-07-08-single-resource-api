@@ -29,7 +29,6 @@ storage.prototype.fetchItem = function(schema, id){
   });
 };
 
-
 storage.prototype.deleteItem = function(schema, noteId){
   return new Promise((resolve, reject) => {
     fs.unlink(`${this.dataDir}/${schema}/${noteId}`, function(err){
