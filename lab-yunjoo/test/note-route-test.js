@@ -105,52 +105,29 @@ describe('testing GET method on endpoint /api/note', function(){
 });
 
 describe('testing GET method ERROR on endpoint /api/note', function(){
-  it('should return 404',(done)=>{
-    request.post(`${serverUrl}/api/note`)
-     .send({content:'testing GET!!!'})
-     .end((err, res) =>{
-       request.get(`${serverUrl}/api/note?${res.body.id}`)
-       .end((err, res) => {
-         this.res = res;
-         this.note = res.body;
-         expect(this.res.status).to.equal(404);
-       });
-     });
-    done();
-  });
   it('should return 400',(done)=>{
     request.post(`${serverUrl}/api/note`)
      .send({content:'testing GET!!!'})
-     .end(() =>{
-       request.get(`${serverUrl}/api/note?id=1234`)
+     .end((err) =>{
+       expect(err).to.equal(null);
+       request.get(`${serverUrl}/api/note`)
        .end((err, res) => {
          this.res = res;
-         this.note = res.body;
          expect(this.res.status).to.equal(400);
+         done();
        });
      });
-    done();
+  });
+  it('should return 404',(done)=>{
+    request.post(`${serverUrl}/api/note`)
+     .send({content:'testing GET!!!'})
+     .end((err,res) =>{
+       request.get(`${serverUrl}/api/note?id=${res.body.id+1}`)
+       .end((err, res) => {
+         this.res = res;
+         expect(this.res.status).to.equal(404);
+         done();
+       });
+     });
   });
 });
-
-// describe('testing method PUT on endpoint /api/note', function(){
-//   before((done) =>{
-//     request.post(`${serverUrl}/api/note`)
-//     .send({content:'testing PUT!!!'})
-//     .end((err, res) =>{
-//       request.put(`${serverUrl}/api/note?id=${res.body.id}`)
-//       .send({content:'update note with PUT method'})
-//       .end((err, res) => {
-//         this.res = res;
-//         this.note = res.body;
-//         console.log(this.note);
-//         done();
-//       });
-//     });
-//   });
-//   describe('testing PUT method status 200', ()=>{
-//     it('should return 200', ()=>{
-//       expect(this.res.status).to.equal(200);
-//     });
-//   });
-// });

@@ -22,13 +22,12 @@ module.exports = function(router){
 
   })
   .get('/api/note', function(req,res){
-    if(req.url.query.id){
-      storage.fetchItem('note',req.url.query.id)
-      .then(note => response(200, note)(res))
-      .catch(() => response(404, 'not found')(res));
-    } else {
-      response(404,'not found')(res);
+    if(!req.url.query.id){
+      return response(400, 'bad request')(res);
     }
+    storage.fetchItem('note',req.url.query.id)
+    .then(note => response(200, note)(res))
+    .catch(() => response(404, 'not found')(res));
   })
   .put('/api/note', function(req,res){
     if(req.body.id){

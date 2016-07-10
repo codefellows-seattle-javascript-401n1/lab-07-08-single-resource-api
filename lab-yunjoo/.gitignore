@@ -1,3 +1,7 @@
+# ignoring the notes I make
+data/note/*
+test/data/note/*
+
 # Created by https://www.gitignore.io/api/osx,linux,node,vim
 
 ### OSX ###
