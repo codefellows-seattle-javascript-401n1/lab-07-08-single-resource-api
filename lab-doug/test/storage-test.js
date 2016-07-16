@@ -39,16 +39,13 @@ describe('Testing the Storage module,', function(){
     });
   });
   describe('Testing the deleteItem method,', function(){
-    it('should return verify that the file does not exist: ', function(done){
-      testStorage.deleteItem('matchscore', 123456)
+    it('should verify that the file does not exist: ', function(done){
+      testStorage.deleteItem('matchscore', '123456')
       .then (() => {
         fs.readdir(`${__dirname}/data/matchscore`, function(err, files){
+          expect(files).to.not.include.members(['123456.json']);
           done();
         });
-      })
-      .then(function(files){
-        expect(files.name).to.not.equal('123456.json');
-        done();
       }).catch(function(err){
         console.error(err);
         expect(err).to.equal(undefined);

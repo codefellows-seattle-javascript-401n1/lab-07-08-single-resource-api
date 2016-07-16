@@ -46,7 +46,7 @@ Router.prototype.route = function(){
         return routes[req.method][req.url.pathname](req, res);
       }
       return response(404, 'not found')(res);
-    }).catch(function(err){
+    }).catch(function(){
       return response(400, 'bad request')(res);
     });
   };
