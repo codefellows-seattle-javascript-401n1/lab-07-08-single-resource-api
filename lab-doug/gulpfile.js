@@ -9,8 +9,8 @@ const paths = ['*.js', 'lib/*.js', 'model/*.js', 'test/*.js', 'route/*.js'];
 gulp.task('eslint', function(){
   gulp.src(paths)
   .pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(eslint.failAfterError());
+  .pipe(eslint.format());
+  //.pipe(eslint.failAfterError());
 });
 
 gulp.task('nodemon', function(){

@@ -13,7 +13,7 @@ module.exports = function(router){
       matchScoreStorage.setItem('matchscore', req.body)
       .then(function(item){
         response(200, item)(res);
-      }).catch(function(err){
+      }).catch(function(){
         response(400, 'bad request')(res);
       });
     } else {
@@ -27,7 +27,7 @@ module.exports = function(router){
         matchScoreStorage.setItem('matchscore', req.body)
         .then(function(item) {
           response(200, item.body)(res);
-        }).catch(function(err){
+        }).catch(function(){
           response(400, 'bad request')(res);
         });
       });
@@ -35,7 +35,6 @@ module.exports = function(router){
     }
   }).get('/api/matchscore', function(req, res){
     if(!req.url.query.id) return response(400, 'bad request')(res);
-    console.log('get id: ', req.url.query.id);
     matchScoreStorage.fetchItem('matchscore', req.url.query.id)
     .then(function(item){
       return response(200, item)(res);

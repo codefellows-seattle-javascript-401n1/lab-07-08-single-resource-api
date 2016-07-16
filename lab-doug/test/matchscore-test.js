@@ -72,7 +72,6 @@ describe('testing matchscore module ', function(){
       .end((err, res) => {
         this.res = res;
         this.matchScore = res.body;
-        console.log('this.matchscore: ', this.matchScore);
         request.get(`${serverUrl}/api/matchscore`)
         .query(`id=${this.matchScore.uuid}`)
           .end((err, res) => {
