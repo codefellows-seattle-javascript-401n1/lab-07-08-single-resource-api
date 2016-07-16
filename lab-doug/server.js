@@ -12,5 +12,5 @@ matchScoreRoute(router);
 const server = module.exports = http.createServer(router.route());
 server.listen(port, function(){
   server.isRunning = true;
-  console.log('http server started on port: ', port);
+  console.log('http server started on port:: ', port);
 });
