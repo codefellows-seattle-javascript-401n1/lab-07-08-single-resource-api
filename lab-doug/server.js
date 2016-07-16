@@ -1,7 +1,7 @@
 'use strict';
 
 const http = require('http');
-const Router = require('./lib/router').Router;
+const Router = require(`${__dirname}/lib/router`).Router;
 const port = process.env.PORT || 3000;
 const router = new Router();
 const matchScoreRoute = require('./route/matchscore-route');
