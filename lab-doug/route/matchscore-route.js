@@ -1,7 +1,7 @@
 'use strict';
 
 const response = require('../lib/response');
-const Storage = require('../lib/Storage');
+const Storage = require('../lib/storage');
 const uuid = require('node-uuid');
 var matchScoreStorage = new Storage(__dirname + '/../data');
 
