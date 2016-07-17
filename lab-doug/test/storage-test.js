@@ -5,6 +5,7 @@ const Storage = require('../lib/storage');
 const testStorage = new Storage(`${__dirname}/data`);
 
 describe('Testing the Storage module,', function(){
+
   describe('Testing the setItem method,', function(){
     it('should match file name equal to uuid.json', function(done){
       var item = {uuid:'123456', distance: 500, score: 576, xCount: 25};

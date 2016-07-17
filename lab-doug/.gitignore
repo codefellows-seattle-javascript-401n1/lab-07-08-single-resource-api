@@ -1,8 +1,6 @@
 
 # Created by https://www.gitignore.io/api/osx,linux,node
 #ignore files added to db
-test/data/**
-
 ### OSX ###
 *.DS_Store
 .AppleDouble
@@ -85,4 +83,3 @@ jspm_packages
 .node_repl_history
 
 #Test data
-/test/data/**
