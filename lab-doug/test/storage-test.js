@@ -11,7 +11,7 @@ describe('Testing the Storage module,', function(){
       var item = {uuid:'123456', distance: 500, score: 576, xCount: 25};
       testStorage.setItem('matchscore',item )
       .then (() => {
-        fs.readdir(`${__dirname}/data/matchscore`, function(err, files){
+        fs.readdir(`${__dirname}/data/matchscore`, function(err){
           done();
         })
       .then(function(files){
