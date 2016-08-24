@@ -2,7 +2,6 @@
 
 const parseUrl = require('./parse-url');
 const parseBody = require('./parse-body');
-
 const Router = module.exports = function(){
   this.routes = {
     GET:{},
